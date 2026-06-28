@@ -171,6 +171,35 @@ document.addEventListener('DOMContentLoaded', () => {
       position = 0;
       carouselContainer.style.transform = `translateX(0px)`;
     });
+
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const viewport = carouselContainer.parentElement;
+
+    viewport.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    viewport.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0) {
+          // Swipe left — go next
+          const slideWidth = getSlideWidth();
+          const maxScroll = getMaxScroll();
+          position += slideWidth;
+          if (position > maxScroll) position = maxScroll;
+        } else {
+          // Swipe right — go prev
+          const slideWidth = getSlideWidth();
+          position -= slideWidth;
+          if (position < 0) position = 0;
+        }
+        carouselContainer.style.transform = `translateX(-${position}px)`;
+      }
+    }, { passive: true });
   }
 
   // ==========================================

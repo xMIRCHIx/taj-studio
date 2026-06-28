@@ -26,11 +26,11 @@ exports.home = async (req, res, next) => {
 };
 
 exports.videosLanding = (req, res) => {
-  res.render('videos', { title: 'Our Films — Taj Studio' });
+  res.render('videos', { title: 'Our Films — Taj Studio', navSolid: true });
 };
 
 exports.photosLanding = (req, res) => {
-  res.render('photos', { title: 'Our Photography — Taj Studio' });
+  res.render('photos', { title: 'Our Photography — Taj Studio', navSolid: true });
 };
 
 exports.videoCategory = async (req, res, next) => {
@@ -57,7 +57,8 @@ exports.videoCategory = async (req, res, next) => {
       category, 
       items: videos, 
       page, 
-      totalPages 
+      totalPages,
+      navSolid: true
     });
   } catch (err) {
     console.error('Video Category Error:', err);
@@ -89,7 +90,8 @@ exports.photoCategory = async (req, res, next) => {
       category, 
       items: photos, 
       page, 
-      totalPages 
+      totalPages,
+      navSolid: true
     });
   } catch (err) {
     console.error('Photo Category Error:', err);
@@ -98,7 +100,7 @@ exports.photoCategory = async (req, res, next) => {
 };
 
 exports.contactPage = (req, res) => {
-  res.render('contact', { title: 'Contact — Taj Studio' });
+  res.render('contact', { title: 'Contact — Taj Studio', navSolid: true });
 };
 
 exports.contactSubmit = async (req, res, next) => {

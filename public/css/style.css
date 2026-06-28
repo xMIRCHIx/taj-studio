@@ -242,6 +242,7 @@ section {
   transition: var(--transition);
   display: flex;
   align-items: center;
+  background-color: transparent;
 }
 
 .navbar.scrolled {
@@ -251,6 +252,35 @@ section {
   background-color: rgba(250, 248, 245, 0.92);
   box-shadow: 0 4px 20px rgba(28, 26, 24, 0.03);
   border-bottom: 1px solid var(--border);
+}
+
+/* Transparent state — white text on dark hero */
+.navbar:not(.scrolled) .nav-logo,
+.navbar:not(.scrolled) .nav-link,
+.navbar:not(.scrolled) .hamburger span {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.navbar:not(.scrolled) .hamburger span {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Non-index pages: always show solid navbar */
+.navbar.navbar-solid {
+  background-color: rgba(250, 248, 245, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar.navbar-solid .nav-logo,
+.navbar.navbar-solid .nav-link,
+.navbar.navbar-solid .hamburger span {
+  color: var(--text);
+}
+
+.navbar.navbar-solid .hamburger span {
+  background-color: var(--text);
 }
 
 .navbar .container {
