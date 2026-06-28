@@ -1,0 +1,76 @@
+<%- include('../partials/head') %>
+
+<!-- Admin Nav -->
+<header class="admin-navbar">
+  <a href="/admin/dashboard" class="admin-logo" style="text-decoration: none; color: inherit;">TAJ STUDIO <span>ADMIN</span></a>
+  <a href="/admin/dashboard" class="admin-logout-btn" style="text-decoration: none;">&larr; Dashboard</a>
+</header>
+
+<!-- Main Container -->
+<main class="admin-main" style="max-width: 800px;">
+  <div class="admin-header-row">
+    <div>
+      <h1 class="admin-title">Upload Fine Photography</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Upload new captures to your photography portfolio. Bulk uploading is supported.</p>
+    </div>
+  </div>
+
+  <!-- Flash Messages -->
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success">
+      <span><%= success %></span>
+      <button class="alert-close">&times;</button>
+    </div>
+  <% } %>
+  
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error">
+      <span><%= error %></span>
+      <button class="alert-close">&times;</button>
+    </div>
+  <% } %>
+
+  <!-- Upload Form -->
+  <div class="admin-card" style="margin-top: 1.5rem;">
+    <form action="/admin/upload-photo" method="POST" enctype="multipart/form-data">
+      
+      <div class="form-row">
+        <!-- Category Selector -->
+        <div class="form-group">
+          <label for="category">Portfolio Category *</label>
+          <select id="category" name="category" class="form-control" required>
+            <option value="wedding">Wedding Portfolio</option>
+            <option value="prewedding">Pre-Wedding Portfolio</option>
+            <option value="anniversary">Anniversary Portfolio</option>
+            <option value="engagement">Engagement Portfolio</option>
+            <option value="birthday">Birthday Portfolio</option>
+            <option value="indoor">Indoor Portfolio</option>
+          </select>
+        </div>
+
+        <!-- Description / Alt Text -->
+        <div class="form-group">
+          <label for="alt_text">Search Tags / Alternative Text (Optional)</label>
+          <input type="text" id="alt_text" name="alt_text" class="form-control" placeholder="E.g., Couple candid session Udaipur palace">
+        </div>
+      </div>
+
+      <!-- File Dropzone/Multi-Upload -->
+      <div class="form-group" style="margin-top: 1rem;">
+        <label for="photos">Select Photo Files * (Multiple files supported, JPG/PNG/WEBP only)</label>
+        <input type="file" id="photos" name="photos" class="form-control" accept="image/jpeg,image/png,image/webp" multiple required style="padding: 2rem; border: 2px dashed var(--border); background-color: var(--bg); text-align: center;">
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">Tip: You can select up to 20 images at once by holding Ctrl / Shift while selecting files.</p>
+      </div>
+
+      <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
+        <a href="/admin/dashboard" class="btn btn-outline" style="border-radius: 8px;">Cancel</a>
+        <button type="submit" class="btn btn-gold" style="border-radius: 8px;">Upload & Publish</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<%- include('../partials/admin-mobile-nav') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

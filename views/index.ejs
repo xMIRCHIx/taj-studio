@@ -1,0 +1,449 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<!-- Section 1: Hero Slider -->
+<header class="hero-slider-section" data-autoplay-duration="<%= settings.hero_duration %>">
+  <div class="hero-slides-container">
+    <% if (heroSlides.length === 0) { %>
+      <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');">
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+          <span class="eyebrow" style="color: var(--gold); margin-bottom: 1.5rem;">Luxury Wedding Film & Photography</span>
+          <h1 class="display-headline">
+            <span class="word">Crafting</span>
+            <span class="word">Timeless</span>
+            <span class="word">Moments</span>
+          </h1>
+          <p class="reveal">We capture your once-in-a-lifetime stories with cinematic elegance, creating emotional masterpieces that you will cherish forever.</p>
+          <div class="hero-btns reveal">
+            <a href="/contact" class="btn btn-gold">Book a Consultation</a>
+            <a href="/videos" class="btn btn-outline-white">View Our Films</a>
+          </div>
+        </div>
+      </div>
+    <% } else { %>
+      <% heroSlides.forEach((slide, index) => { %>
+        <div class="hero-slide <%= index === 0 ? 'active' : '' %>" style="background-image: url('<%= slide.image_path %>');">
+          <div class="hero-overlay"></div>
+          <div class="hero-content container">
+            <span class="eyebrow" style="color: var(--gold); margin-bottom: 1.5rem;"><%= slide.subtitle || 'Luxury Showcase' %></span>
+            <h1 class="display-headline">
+              <% const words = (slide.title || 'Crafting Timeless Moments').split(' '); %>
+              <% words.forEach(word => { %>
+                <span class="word"><%= word %></span>
+              <% }) %>
+            </h1>
+            <div class="hero-btns">
+              <a href="/contact" class="btn btn-gold">Book a Consultation</a>
+              <a href="/videos" class="btn btn-outline-white">View Our Films</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+
+  <!-- Slide Navigation Controls (Only if slides > 1) -->
+  <% if (heroSlides.length > 1) { %>
+    <div class="hero-controls">
+      <button class="hero-ctrl-btn prev" aria-label="Previous Slide">&lsaquo;</button>
+      <button class="hero-ctrl-btn next" aria-label="Next Slide">&rsaquo;</button>
+    </div>
+    <div class="hero-dots">
+      <% heroSlides.forEach((_, index) => { %>
+        <button class="hero-dot <%= index === 0 ? 'active' : '' %>" data-index="<%= index %>"></button>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</header>
+
+<!-- Section 2: Stats -->
+<section class="stats reveal">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3 class="stat-number" data-target="150" data-suffix="+">0+</h3>
+        <p>Films Completed</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="stat-number" data-target="450" data-suffix="+">0+</h3>
+        <p>Photoshoots</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="stat-number" data-target="12" data-suffix="+">0+</h3>
+        <p>Industry Awards</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="stat-number" data-target="99" data-suffix="%">0%</h3>
+        <p>Happy Clients</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: About Us -->
+<section id="about" class="about reveal">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img">
+        <img src="<%= settings.about_image %>" alt="About <%= settings.store_name %> Team" loading="lazy">
+      </div>
+      <div class="about-content">
+        <div class="gold-rule"></div>
+        <span class="eyebrow"><%= settings.about_eyebrow %></span>
+        <h2 class="section-headline"><%= settings.about_title %></h2>
+        <p><%= settings.about_text1 %></p>
+        <% if (settings.about_text2) { %>
+          <p><%= settings.about_text2 %></p>
+        <% } %>
+        <a href="/contact" class="gold-link">Let's Create Together</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: Services Showcase -->
+<section class="services-showcase-section reveal" id="services">
+  <div class="container">
+    <div class="services-header-wrapper">
+      <span class="eyebrow">Our Specialties</span>
+      <h2 class="section-headline">Tailored Visual Experiences</h2>
+    </div>
+    
+    <div class="services-rows-container">
+      
+      <!-- Item 1 -->
+      <a href="/videos/wedding" class="service-row-item">
+        <span class="service-row-num">01</span>
+        <div class="service-row-content">
+          <h3>Wedding Films</h3>
+          <p>A full-length cinematic feature film and high-impact trailer documenting your emotions and celebrations.</p>
+        </div>
+        <div class="service-row-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Wedding Films" loading="lazy">
+        </div>
+        <div class="service-row-arrow">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+      
+      <!-- Item 2 -->
+      <a href="/videos/prewedding" class="service-row-item">
+        <span class="service-row-num">02</span>
+        <div class="service-row-content">
+          <h3>Pre-Wedding Shoots</h3>
+          <p>Scenic portraiture sessions and romance concept videos in breath-taking, curated outdoor destinations.</p>
+        </div>
+        <div class="service-row-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="Pre-Wedding Shoots" loading="lazy">
+        </div>
+        <div class="service-row-arrow">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+      
+      <!-- Item 3 -->
+      <a href="/videos/anniversary" class="service-row-item">
+        <span class="service-row-num">03</span>
+        <div class="service-row-content">
+          <h3>Anniversary Shoots</h3>
+          <p>Rekindling your vows and capturing the growth of your family through elegant, editorial photoshoots.</p>
+        </div>
+        <div class="service-row-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80" alt="Anniversary Shoots" loading="lazy">
+        </div>
+        <div class="service-row-arrow">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+      
+      <!-- Item 4 -->
+      <a href="/photos/engagement" class="service-row-item">
+        <span class="service-row-num">04</span>
+        <div class="service-row-content">
+          <h3>Engagement Portraits</h3>
+          <p>Documenting the exciting moment you say 'yes' with vibrant photography and highlights reel.</p>
+        </div>
+        <div class="service-row-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80" alt="Engagement Portraits" loading="lazy">
+        </div>
+        <div class="service-row-arrow">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+      
+      <!-- Item 5 -->
+      <a href="/photos/birthday" class="service-row-item">
+        <span class="service-row-num">05</span>
+        <div class="service-row-content">
+          <h3>Birthdays & Events</h3>
+          <p>Capturing the joy, laughter, and high energy of milestone birthdays and premium social gatherings.</p>
+        </div>
+        <div class="service-row-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80" alt="Birthdays & Events" loading="lazy">
+        </div>
+        <div class="service-row-arrow">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+      
+      <!-- Item 6 -->
+      <a href="/photos/indoor" class="service-row-item">
+        <span class="service-row-num">06</span>
+        <div class="service-row-content">
+          <h3>Indoor Portfolio</h3>
+          <p>Professional headshots, modeling portfolios, and branding photography in our state-of-the-art studio.</p>
+        </div>
+        <div class="service-row-image-wrapper">
+          <img src="https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=800&q=80" alt="Indoor Portfolio" loading="lazy">
+        </div>
+        <div class="service-row-arrow">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+      
+    </div>
+  </div>
+</section>
+
+<!-- Section 5: Featured Work -->
+<section class="featured-work reveal">
+  <div class="container">
+    <div class="featured-header">
+      <div>
+        <span class="eyebrow">Portfolio Highlights</span>
+        <h2 class="section-headline">Featured Works</h2>
+      </div>
+      <div class="carousel-nav-btns">
+        <button class="carousel-nav-btn carousel-prev" aria-label="Previous Slide">&#10229;</button>
+        <button class="carousel-nav-btn carousel-next" aria-label="Next Slide">&#10230;</button>
+      </div>
+    </div>
+
+    <div class="carousel-viewport">
+      <div class="carousel-container">
+        <% if (featuredVideos.length === 0 && featuredPhotos.length === 0) { %>
+          <!-- 6 Placeholders when database is empty -->
+          <div class="carousel-slide video-card-trigger" data-youtube-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" style="cursor: pointer;">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Wedding Film Placeholder">
+            <div class="play-badge" style="opacity: 1; transform: translate(-50%, -50%) scale(1); background: rgba(255,255,255,0.9);"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <div class="slide-overlay">
+              <span class="category-tag">Wedding Films</span>
+              <h3>Ananya & Kabir</h3>
+              <p>Royal Udaipur Heritage Wedding (Play Sample)</p>
+            </div>
+          </div>
+          <div class="carousel-slide video-card-trigger" data-youtube-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" style="cursor: pointer;">
+            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80" alt="Prewedding Film Placeholder">
+            <div class="play-badge" style="opacity: 1; transform: translate(-50%, -50%) scale(1); background: rgba(255,255,255,0.9);"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <div class="slide-overlay">
+              <span class="category-tag">Pre-Wedding</span>
+              <h3>Rohan & Meera</h3>
+              <p>Sunrise at the Taj Mahal (Play Sample)</p>
+            </div>
+          </div>
+          <div class="carousel-slide photo-item-trigger" data-src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80" data-title="Aditya & Riya — Sunset Vows in Goa" style="cursor: pointer;">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Wedding Photo Placeholder">
+            <div class="slide-overlay">
+              <span class="category-tag">Wedding Portfolio</span>
+              <h3>Aditya & Riya</h3>
+              <p>Sunset Vows in Goa (View Image)</p>
+            </div>
+          </div>
+          <div class="carousel-slide photo-item-trigger" data-src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=1200&q=80" data-title="Dev & Sonia — Jaipur Palace Session" style="cursor: pointer;">
+            <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Engagement Portrait Placeholder">
+            <div class="slide-overlay">
+              <span class="category-tag">Engagement Portfolio</span>
+              <h3>Dev & Sonia</h3>
+              <p>Jaipur Palace Royal Session (View Image)</p>
+            </div>
+          </div>
+          <div class="carousel-slide photo-item-trigger" data-src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1200&q=80" data-title="Aarav's Milestone Celebration" style="cursor: pointer;">
+            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Birthday Showcase Placeholder">
+            <div class="slide-overlay">
+              <span class="category-tag">Birthday Portfolio</span>
+              <h3>Aarav's Milestone</h3>
+              <p>Vibrant 1st Birthday Celebration (View Image)</p>
+            </div>
+          </div>
+          <div class="carousel-slide photo-item-trigger" data-src="https://images.unsplash.com/photo-1520854221256-174b1ec358ef?auto=format&fit=crop&w=1200&q=80" data-title="Shanaya Kapoor — High-Fashion Editorial" style="cursor: pointer;">
+            <img src="https://images.unsplash.com/photo-1520854221256-174b1ec358ef?auto=format&fit=crop&w=600&q=80" alt="Indoor Studio Placeholder">
+            <div class="slide-overlay">
+              <span class="category-tag">Indoor Studio</span>
+              <h3>Shanaya Kapoor</h3>
+              <p>High-Fashion Editorial Session (View Image)</p>
+            </div>
+          </div>
+        <% } else { %>
+          <% 
+            // Mix videos and photos together
+            const combinedItems = featuredVideos.map(v => ({...v, isVideo: true})).concat(featuredPhotos.map(p => ({...p, isVideo: false})));
+            combinedItems.forEach(item => { 
+          %>
+            <div class="carousel-slide <%= item.isVideo ? 'video-card-trigger' : 'photo-item-trigger' %>" 
+                 <%= item.isVideo ? `data-youtube-url="${item.youtube_url}" data-video-url="${item.file_path}"` : `data-src="${item.file_path}" data-title="${item.title || 'Taj Studio Photo'}"` %> 
+                 style="cursor: pointer;">
+              <img src="<%= item.thumbnail || item.file_path %>" alt="<%= item.title || 'Taj Studio Feature' %>" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80'">
+              <% if (item.isVideo) { %>
+                <div class="play-badge" style="opacity: 1; transform: translate(-50%, -50%) scale(1); background: rgba(255,255,255,0.9);"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+              <% } %>
+              <div class="slide-overlay">
+                <span class="category-tag"><%= item.category %> <%= item.isVideo ? 'Films' : 'Photography' %></span>
+                <h3><%= item.title || 'Taj Studio Capture' %></h3>
+                <p><%= item.isVideo ? 'Play Film' : 'View Image' %></p>
+              </div>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 5.5: UGC Social Reels -->
+<section class="ugc-section reveal">
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem;">
+      <div>
+        <span class="eyebrow">Behind The Lens</span>
+        <h2 class="section-headline">Taj Reels & Behind-The-Scenes</h2>
+      </div>
+      <div class="carousel-nav-btns" style="position: static; transform: none; margin-bottom: 0.5rem;">
+        <button class="carousel-nav-btn ugc-prev" aria-label="Previous Reels">&#10229;</button>
+        <button class="carousel-nav-btn ugc-next" aria-label="Next Reels">&#10230;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ugc-carousel-viewport" data-autoplay-speed="<%= settings.ugc_duration %>">
+    <div class="ugc-carousel-container">
+      <% if (ugcItems.length === 0) { %>
+        <!-- Default UGC Items -->
+        <div class="ugc-slide">
+          <div class="ugc-card photo-item-trigger" data-src="https://images.unsplash.com/photo-1520854221256-174b1ec358ef?auto=format&fit=crop&w=600&h=800&q=80" data-title="Candid Groom Portraits">
+            <img src="https://images.unsplash.com/photo-1520854221256-174b1ec358ef?auto=format&fit=crop&w=600&h=800&q=80" alt="Insta Vibe 1">
+            <div class="ugc-card-overlay">
+              <span class="ugc-tag">Insta Moments</span>
+              <h4>Behind The Lens</h4>
+            </div>
+          </div>
+        </div>
+        <div class="ugc-slide">
+          <div class="ugc-card photo-item-trigger" data-src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&h=800&q=80" data-title="Cinematic Bride Portraits">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&h=800&q=80" alt="Insta Vibe 2">
+            <div class="ugc-card-overlay">
+              <span class="ugc-tag">Couple Vibe</span>
+              <h4>Real Happiness</h4>
+            </div>
+          </div>
+        </div>
+        <div class="ugc-slide">
+          <div class="ugc-card photo-item-trigger" data-src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&h=800&q=80" data-title="Royal Heritage Setup">
+            <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&h=800&q=80" alt="Insta Vibe 3">
+            <div class="ugc-card-overlay">
+              <span class="ugc-tag">Slow Motion</span>
+              <h4>Royal Groom Walk</h4>
+            </div>
+          </div>
+        </div>
+        <div class="ugc-slide">
+          <div class="ugc-card photo-item-trigger" data-src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&h=800&q=80" data-title="The Grand Entry">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&h=800&q=80" alt="Insta Vibe 4">
+            <div class="ugc-card-overlay">
+              <span class="ugc-tag">Candid</span>
+              <h4>The First Look</h4>
+            </div>
+          </div>
+        </div>
+      <% } else { %>
+        <% ugcItems.forEach(item => { %>
+          <div class="ugc-slide">
+            <% if (item.type === 'video') { %>
+              <div class="ugc-card video-card-trigger" data-video-url="<%= item.file_path %>" style="cursor: pointer;">
+                <video src="<%= item.file_path %>" muted loop playsinline class="ugc-video-preview"></video>
+                <div class="ugc-play-icon">
+                  <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z" fill="currentColor"/></svg>
+                </div>
+                <div class="ugc-card-overlay">
+                  <span class="ugc-tag">Video Reel</span>
+                  <h4>Cinematic Short</h4>
+                </div>
+              </div>
+            <% } else { %>
+              <div class="ugc-card photo-item-trigger" data-src="<%= item.file_path %>" data-title="Social Stories" style="cursor: pointer;">
+                <img src="<%= item.file_path %>" alt="Social Media Vibe">
+                <div class="ugc-card-overlay">
+                  <span class="ugc-tag">Stills Story</span>
+                  <h4>Candid Frame</h4>
+                </div>
+              </div>
+            <% } %>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Testimonials -->
+<section class="testimonials reveal">
+  <div class="container">
+    <span class="eyebrow">Client Love</span>
+    <h2 class="section-headline">Kind Words From Our Couples</h2>
+    
+    <div class="testimonials-slider">
+      <!-- Testimonial 1 -->
+      <div class="testimonial-slide active">
+        <p class="testimonial-quote">"Taj Studio didn't just photograph our wedding; they created a visual legacy. The wedding film felt like an actual movie, and every photograph captured our raw, unfiltered laughter. We cannot thank them enough!"</p>
+        <h4 class="testimonial-author">Ananya & Kabir</h4>
+        <p class="testimonial-role">Udaipur, Dec 2025</p>
+      </div>
+      <!-- Testimonial 2 -->
+      <div class="testimonial-slide">
+        <p class="testimonial-quote">"The level of professionalism and artistic direction is unparalleled. During our pre-wedding shoot in Jaipur, they made us feel completely at ease. The frames speak for themselves—pure poetry."</p>
+        <h4 class="testimonial-author">Rohan & Meera</h4>
+        <p class="testimonial-role">Delhi, Feb 2026</p>
+      </div>
+      <!-- Testimonial 3 -->
+      <div class="testimonial-slide">
+        <p class="testimonial-quote">"Absolutely stunning work! From the lighting design to the background musical score of our film, every detail was carefully executed. Taj Studio is indeed the best in the industry."</p>
+        <h4 class="testimonial-author">Pooja & Dev</h4>
+        <p class="testimonial-role">Mumbai, Oct 2025</p>
+      </div>
+    </div>
+    
+    <div class="slider-dots"></div>
+  </div>
+</section>
+
+<!-- Section 7: CTA Banner -->
+<section class="cta-banner reveal">
+  <div class="container">
+    <h2 class="section-headline" style="color: var(--white);">Let us capture your story</h2>
+    <p>Are you ready to create a masterpiece that will stand the test of time? Let us design your custom package for your upcoming celebrations.</p>
+    <a href="/contact" class="btn btn-gold">Secure Your Date Now</a>
+  </div>
+</section>
+
+<!-- GSAP Animation Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap !== 'undefined') {
+      gsap.from('.word', {
+        opacity: 0, 
+        y: 40, 
+        duration: 0.8,
+        stagger: 0.12, 
+        ease: 'power3.out',
+        delay: 0.3
+      });
+    }
+  });
+</script>
+
+<%- include('partials/footer') %>

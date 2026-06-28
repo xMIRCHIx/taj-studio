@@ -1,0 +1,381 @@
+<%- include('../partials/head') %>
+
+<!-- Admin Nav -->
+<header class="admin-navbar">
+  <a href="/admin/dashboard" class="admin-logo" style="text-decoration: none; color: inherit;">TAJ STUDIO <span>ADMIN</span></a>
+  <div style="display: flex; gap: 1rem; align-items: center;">
+    <a href="/admin/dashboard" class="admin-logout-btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.25); color: var(--white); padding: 0.5rem 1rem; text-decoration: none;">Back to Dashboard</a>
+    <form action="/auth/logout" method="POST" style="margin: 0;">
+      <button type="submit" class="admin-logout-btn">Logout</button>
+    </form>
+  </div>
+</header>
+
+<main class="admin-main">
+  <!-- Title and Notices -->
+  <div class="admin-header-row">
+    <div>
+      <h1 class="admin-title">Site Settings & Customization</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Manage your slides, text contents, branding, and autoplay timers.</p>
+    </div>
+  </div>
+
+  <!-- Flash Alerts -->
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success" style="margin-bottom: 2rem;">
+      <span><%= success %></span>
+      <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
+    </div>
+  <% } %>
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error" style="margin-bottom: 2rem;">
+      <span><%= error %></span>
+      <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
+    </div>
+  <% } %>
+
+  <!-- Settings Layout Split -->
+  <div class="settings-layout">
+    <!-- Sidebar Navigation Tabs -->
+    <div class="settings-sidebar">
+      <button class="settings-mobile-trigger" id="settingsMobileTrigger">
+        <span>General & Branding</span>
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 10l5 5 5-5H7z" fill="currentColor"/></svg>
+      </button>
+      <div class="tab-btns-wrapper">
+        <button class="tab-btn active" data-tab="general">General & Branding</button>
+        <button class="tab-btn" data-tab="about">About Us Section</button>
+        <button class="tab-btn" data-tab="contact">Contact Details</button>
+        <button class="tab-btn" data-tab="hero">Hero Slideshow</button>
+        <button class="tab-btn" data-tab="ugc">UGC Reels Carousel</button>
+      </div>
+    </div>
+
+    <!-- Main Content Panels -->
+    <div class="settings-panels">
+      <!-- 1. General Panel -->
+      <div class="tab-panel active" id="panel-general">
+        <form action="/admin/settings/general" method="POST">
+          <div class="panel-header">
+            <h3>General Site Configurations</h3>
+            <p>Define global title headers and auto-sliding frequencies.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="store_name">Store Name / Brand Logo Text</label>
+              <input type="text" id="store_name" name="store_name" class="form-control" value="<%= settings.store_name %>" required>
+            </div>
+            <div class="form-group">
+              <label for="hero_duration">Hero Slider Duration (Milliseconds)</label>
+              <input type="number" id="hero_duration" name="hero_duration" class="form-control" value="<%= settings.hero_duration %>" min="1000" step="500" required>
+              <span class="field-hint">e.g., 5000 = 5 seconds autoplay transition.</span>
+            </div>
+            <div class="form-group">
+              <label for="ugc_duration">UGC Carousel Autoplay Speed (Milliseconds)</label>
+              <input type="number" id="ugc_duration" name="ugc_duration" class="form-control" value="<%= settings.ugc_duration %>" min="1000" step="500" required>
+              <span class="field-hint">e.g., 4000 = 4 seconds sliding intervals.</span>
+            </div>
+            <div class="form-group full-width">
+              <label for="footer_about">Footer Description Text</label>
+              <textarea id="footer_about" name="footer_about" class="form-control" rows="3" required><%= settings.footer_about %></textarea>
+              <span class="field-hint">A brief description of your studio that is displayed in the bottom footer.</span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-gold" style="margin-top: 2rem;">Save General Settings</button>
+        </form>
+      </div>
+
+      <!-- 2. About Us Panel -->
+      <div class="tab-panel" id="panel-about">
+        <form action="/admin/settings/general" method="POST" enctype="multipart/form-data">
+          <div class="panel-header">
+            <h3>About Us Presentation</h3>
+            <p>Customize the About section text and team/studio showcase photography.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="about_eyebrow">Eyebrow Heading</label>
+              <input type="text" id="about_eyebrow" name="about_eyebrow" class="form-control" value="<%= settings.about_eyebrow %>" required>
+            </div>
+            <div class="form-group">
+              <label for="about_title">Section Title Headline</label>
+              <input type="text" id="about_title" name="about_title" class="form-control" value="<%= settings.about_title %>" required>
+            </div>
+            <div class="form-group full-width">
+              <label for="about_text1">Primary Description Paragraph</label>
+              <textarea id="about_text1" name="about_text1" class="form-control" rows="4" required><%= settings.about_text1 %></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label for="about_text2">Secondary Description Paragraph</label>
+              <textarea id="about_text2" name="about_text2" class="form-control" rows="3"><%= settings.about_text2 %></textarea>
+            </div>
+            <div class="form-group">
+              <label>Current About Section Image</label>
+              <div class="media-preview-box">
+                <img src="<%= settings.about_image %>" alt="Current About Image" style="max-height: 150px; border-radius: 8px;">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="about_image">Upload New About Image</label>
+              <input type="file" id="about_image" name="about_image" class="form-control" accept="image/*">
+              <span class="field-hint">Recommended aspect ratio: 4:3 or 1:1. JPG, PNG, WEBP formats.</span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-gold" style="margin-top: 2rem;">Update About Settings</button>
+        </form>
+      </div>
+
+      <!-- 3. Contact Details Panel -->
+      <div class="tab-panel" id="panel-contact">
+        <form action="/admin/settings/general" method="POST">
+          <div class="panel-header">
+            <h3>Studio Contact Details & Social Media Links</h3>
+            <p>These values populate the contact card page and footer panels.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="contact_address">Physical Address</label>
+              <input type="text" id="contact_address" name="contact_address" class="form-control" value="<%= settings.contact_address %>" required>
+            </div>
+            <div class="form-group">
+              <label for="contact_phone">Contact Phone Number</label>
+              <input type="text" id="contact_phone" name="contact_phone" class="form-control" value="<%= settings.contact_phone %>" required>
+            </div>
+            <div class="form-group">
+              <label for="contact_email">Business Email Address</label>
+              <input type="email" id="contact_email" name="contact_email" class="form-control" value="<%= settings.contact_email %>" required>
+            </div>
+            <div class="form-group">
+              <label for="contact_whatsapp">WhatsApp Link</label>
+              <input type="url" id="contact_whatsapp" name="contact_whatsapp" class="form-control" value="<%= settings.contact_whatsapp %>" placeholder="https://wa.me/...">
+            </div>
+            <div class="form-group">
+              <label for="contact_instagram">Instagram Handle URL</label>
+              <input type="url" id="contact_instagram" name="contact_instagram" class="form-control" value="<%= settings.contact_instagram %>" placeholder="https://instagram.com/...">
+            </div>
+            <div class="form-group">
+              <label for="contact_facebook">Facebook Page URL</label>
+              <input type="url" id="contact_facebook" name="contact_facebook" class="form-control" value="<%= settings.contact_facebook %>" placeholder="https://facebook.com/...">
+            </div>
+            <div class="form-group">
+              <label for="contact_youtube">YouTube Channel URL</label>
+              <input type="url" id="contact_youtube" name="contact_youtube" class="form-control" value="<%= settings.contact_youtube %>" placeholder="https://youtube.com/...">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-gold" style="margin-top: 2rem;">Save Contacts</button>
+        </form>
+      </div>
+
+      <!-- 4. Hero Slideshow Panel -->
+      <div class="tab-panel" id="panel-hero">
+        <div class="panel-header">
+          <h3>Manage Hero Slideshow</h3>
+          <p>Add landscape images to display in the looping homepage slider.</p>
+        </div>
+        
+        <!-- Add Slide Form -->
+        <div class="settings-subcard">
+          <h4>Upload New Slide Image</h4>
+          <form action="/admin/settings/hero/add" method="POST" enctype="multipart/form-data">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="hero_image">Slide Image *</label>
+                <input type="file" id="hero_image" name="hero_image" class="form-control" accept="image/*" required>
+                <span class="field-hint">High resolution landscape image (1920x1080) works best.</span>
+              </div>
+              <div class="form-group">
+                <label for="hero_title">Slide Title (Main overlay text)</label>
+                <input type="text" id="hero_title" name="title" class="form-control" placeholder="e.g., Crafting Timeless Moments">
+              </div>
+              <div class="form-group">
+                <label for="hero_subtitle">Slide Subtitle (Eyebrow overlay text)</label>
+                <input type="text" id="hero_subtitle" name="subtitle" class="form-control" placeholder="e.g., Luxury Wedding Film & Photography">
+              </div>
+              <div class="form-group">
+                <label for="hero_order">Order Index</label>
+                <input type="number" id="hero_order" name="order_index" class="form-control" value="0" min="0">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-gold" style="margin-top: 1rem;">Add Slide</button>
+          </form>
+        </div>
+
+        <!-- Slides List -->
+        <div class="settings-subcard" style="margin-top: 2rem;">
+          <h4>Current Slide Collection</h4>
+          <% if (heroSlides.length === 0) { %>
+            <p style="color: var(--text-muted); text-align: center; padding: 2rem;">No custom slides uploaded. Running on fallback image.</p>
+          <% } else { %>
+            <div class="slides-media-grid">
+              <% heroSlides.forEach(slide => { %>
+                <div class="slide-media-card">
+                  <img src="<%= slide.image_path %>" alt="<%= slide.title || 'Hero Slide' %>">
+                  <div class="slide-media-info">
+                    <h5><%= slide.title || 'Untitled' %></h5>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);"><%= slide.subtitle || 'No subtitle' %></p>
+                    <span style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--gold);">Order: <%= slide.order_index %></span>
+                  </div>
+                  <form action="/admin/settings/hero/delete/<%= slide.id %>" method="POST" class="delete-overlay-form" onsubmit="return confirm('Are you sure you want to delete this hero slide?')">
+                    <button type="submit" class="slide-delete-btn" aria-label="Delete Slide">&times;</button>
+                  </form>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- 5. UGC Reels Panel -->
+      <div class="tab-panel" id="panel-ugc">
+        <div class="panel-header">
+          <h3>Manage UGC Reels Stories</h3>
+          <p>Display 9:16 portrait photos and mobile video reels on the home screen carousel.</p>
+        </div>
+        
+        <!-- Add UGC Form -->
+        <div class="settings-subcard">
+          <h4>Upload New Portrait Card (Reel / Story)</h4>
+          <form action="/admin/settings/ugc/add" method="POST" enctype="multipart/form-data">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="ugc_file">Reel File(s) (Photo or Video) *</label>
+                <input type="file" id="ugc_file" name="ugc_files" class="form-control" accept="image/*,video/*" multiple required>
+                <span class="field-hint">Supports MP4, MOV, JPG, PNG, WEBP. You can select multiple files at once. Recommend portrait aspect ratios (e.g., 1080x1920).</span>
+              </div>
+              <div class="form-group">
+                <label for="ugc_order">Sort Order Index</label>
+                <input type="number" id="ugc_order" name="order_index" class="form-control" value="0" min="0">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-gold" style="margin-top: 1rem;">Upload Social Media Card</button>
+          </form>
+        </div>
+
+        <!-- UGC Items Grid List -->
+        <div class="settings-subcard" style="margin-top: 2rem;">
+          <h4>Social Media Stories Collection</h4>
+          <% if (ugcItems.length === 0) { %>
+            <p style="color: var(--text-muted); text-align: center; padding: 2rem;">No custom reels uploaded. Running on fallback portrait assets.</p>
+          <% } else { %>
+            <div class="ugc-media-grid">
+              <% ugcItems.forEach(item => { %>
+                <div class="ugc-media-card">
+                  <% if (item.type === 'video') { %>
+                    <video src="<%= item.file_path %>" muted controls style="width: 100%; height: 180px; object-fit: cover; border-radius: 4px;"></video>
+                  <% } else { %>
+                    <img src="<%= item.file_path %>" alt="UGC Still" style="width: 100%; height: 180px; object-fit: cover; border-radius: 4px;">
+                  <% } %>
+                  <div class="ugc-media-info">
+                    <span class="admin-tag" style="font-size: 0.65rem; padding: 0.1rem 0.4rem; display: inline-block; margin-bottom: 0.25rem;"><%= item.type.toUpperCase() %></span>
+                    <p style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--gold);">Order: <%= item.order_index %></p>
+                  </div>
+                  <form action="/admin/settings/ugc/delete/<%= item.id %>" method="POST" class="delete-overlay-form" onsubmit="return confirm('Are you sure you want to delete this Reel item?')">
+                    <button type="submit" class="slide-delete-btn" aria-label="Delete UGC">&times;</button>
+                  </form>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</main>
+
+<!-- Simple Tab Switching Client Logic -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab-btn, .mobile-tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    // Settings mobile dropdown trigger logic
+    const mobileTrigger = document.getElementById('settingsMobileTrigger');
+    const sidebar = document.querySelector('.settings-sidebar');
+
+    if (mobileTrigger && sidebar) {
+      mobileTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sidebar.classList.toggle('open');
+      });
+
+      document.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+      });
+      
+      // Update trigger text initially based on active tab
+      const activeBtn = document.querySelector('.settings-sidebar .tab-btn.active');
+      if (activeBtn) {
+        mobileTrigger.querySelector('span').innerText = activeBtn.innerText;
+      }
+    }
+
+    // Check query parameters to activate specific tab
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeTabParam = urlParams.get('tab');
+    
+    if (activeTabParam) {
+      const targetTabs = document.querySelectorAll(`[data-tab="${activeTabParam}"]`);
+      const targetPanel = document.getElementById(`panel-${activeTabParam}`);
+      if (targetTabs.length && targetPanel) {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        targetTabs.forEach(t => t.classList.add('active'));
+        targetPanel.classList.add('active');
+        
+        // Update mobile trigger label on init
+        const matchingBtn = document.querySelector(`.settings-sidebar .tab-btn[data-tab="${activeTabParam}"]`);
+        if (matchingBtn && mobileTrigger) {
+          mobileTrigger.querySelector('span').innerText = matchingBtn.innerText;
+        }
+      }
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-tab');
+        
+        // Remove active class from all tabs and panels
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+
+        // Activate all tabs matching the targetTab (both desktop sidebar and mobile tabbar)
+        const targetTabs = document.querySelectorAll(`[data-tab="${targetTab}"]`);
+        targetTabs.forEach(t => t.classList.add('active'));
+        
+        const targetPanel = document.getElementById(`panel-${targetTab}`);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+        }
+        
+        // Update URL query parameter without reloading
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?tab=' + targetTab;
+        window.history.pushState({ path: newUrl }, '', newUrl);
+
+        // Update mobile trigger text
+        if (mobileTrigger) {
+          const matchingBtn = document.querySelector(`.settings-sidebar .tab-btn[data-tab="${targetTab}"]`);
+          if (matchingBtn) {
+            mobileTrigger.querySelector('span').innerText = matchingBtn.innerText;
+          }
+        }
+
+        // Close dropdown
+        if (sidebar) {
+          sidebar.classList.remove('open');
+        }
+
+        // Smooth scroll to top of panel on mobile when switching tabs
+        if (window.innerWidth <= 992) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    });
+  });
+</script>
+
+<%- include('../partials/admin-mobile-nav') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

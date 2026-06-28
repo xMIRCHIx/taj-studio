@@ -1,0 +1,156 @@
+<%- include('../partials/head') %>
+
+<!-- Admin Nav -->
+<header class="admin-navbar">
+  <a href="/admin/dashboard" class="admin-logo" style="text-decoration: none; color: inherit;">TAJ STUDIO <span>ADMIN</span></a>
+  <form action="/auth/logout" method="POST" style="margin: 0;">
+    <button type="submit" class="admin-logout-btn">Logout</button>
+  </form>
+</header>
+
+<!-- Main Dashboard Container -->
+<main class="admin-main">
+  <!-- Welcome Header -->
+  <div class="admin-header-row">
+    <div>
+      <h1 class="admin-title">Welcome, <%= admin ? admin.username : 'Administrator' %></h1>
+      <p style="color: var(--text-muted); font-size: 0.85rem;">Here's what's happening at Taj Studio today.</p>
+    </div>
+    <div class="admin-date-badge">
+      <%= new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="admin-stats-grid">
+    <!-- Videos Stat -->
+    <div class="admin-stat-card">
+      <div class="admin-stat-icon">
+        <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>
+      </div>
+      <div class="admin-stat-info">
+        <h4>Total Films</h4>
+        <p><%= stats.videos %></p>
+      </div>
+    </div>
+    
+    <!-- Photos Stat -->
+    <div class="admin-stat-card">
+      <div class="admin-stat-icon">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" /></svg>
+      </div>
+      <div class="admin-stat-info">
+        <h4>Photos Uploaded</h4>
+        <p><%= stats.photos %></p>
+      </div>
+    </div>
+    
+    <!-- Messages Stat -->
+    <div class="admin-stat-card">
+      <div class="admin-stat-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="admin-stat-info">
+        <h4>Contact Queries</h4>
+        <p><%= stats.messages %></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Split View -->
+  <div class="dashboard-sections-grid">
+    <!-- Left: Quick Actions -->
+    <div class="admin-card admin-quick-actions-card">
+      <h3>Quick Actions</h3>
+      <div class="quick-actions-list">
+        <a href="/admin/upload-video" class="quick-action-link">
+          <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>
+          Upload Video
+        </a>
+        <a href="/admin/upload-photo" class="quick-action-link">
+          <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" /></svg>
+          Upload Photos
+        </a>
+        <a href="/admin/manage-videos" class="quick-action-link">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Manage Videos
+        </a>
+        <a href="/admin/manage-photos" class="quick-action-link">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Manage Photos
+        </a>
+        <a href="/admin/messages" class="quick-action-link">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          View Messages
+        </a>
+        <a href="/admin/settings" class="quick-action-link" style="background-color: var(--surface); color: var(--text);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--text);"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          Site Settings
+        </a>
+        <a href="/" class="quick-action-link" target="_blank" style="background-color: var(--surface);">
+          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Visit Main Site
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: Recent Messages -->
+    <div class="admin-card">
+      <h3>Recent Booking Queries</h3>
+      <% if (recent.length === 0) { %>
+        <p style="color: var(--text-muted); text-align: center; padding: 2rem;">No messages received yet.</p>
+      <% } else { %>
+        <!-- Desktop Table -->
+        <div class="table-wrapper desktop-only-table">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Event Type</th>
+                <th>Date</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recent.forEach(msg => { %>
+                <tr>
+                  <td style="font-weight: 500;"><%= msg.name %></td>
+                  <td><span class="admin-tag"><%= msg.event_type %></span></td>
+                  <td><%= msg.event_date ? new Date(msg.event_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Flexible' %></td>
+                  <td style="color: var(--text-muted); max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= msg.message || 'No description provided.' %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="mobile-cards-list">
+          <% recent.forEach(msg => { %>
+            <div class="mobile-item-card" style="align-items: flex-start;">
+              <div class="mobile-item-info" style="flex: 1; width: 100%;">
+                <h4><%= msg.name %></h4>
+                <div class="mobile-item-tags">
+                  <span class="admin-tag"><%= msg.event_type %></span>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);"><%= msg.event_date ? new Date(msg.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Flexible' %></span>
+                </div>
+                <% if (msg.message) { %>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.4;"><%= msg.message %></p>
+                <% } %>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+
+        <div style="text-align: right; margin-top: 1rem;">
+          <a href="/admin/messages" class="gold-link">View All Queries →</a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/admin-mobile-nav') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

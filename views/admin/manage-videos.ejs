@@ -1,0 +1,117 @@
+<%- include('../partials/head') %>
+
+<!-- Admin Nav -->
+<header class="admin-navbar">
+  <a href="/admin/dashboard" class="admin-logo" style="text-decoration: none; color: inherit;">TAJ STUDIO <span>ADMIN</span></a>
+  <a href="/admin/dashboard" class="admin-logout-btn" style="text-decoration: none;">&larr; Dashboard</a>
+</header>
+
+<!-- Main Container -->
+<main class="admin-main">
+  <div class="admin-header-row">
+    <div>
+      <h1 class="admin-title">Manage Cinematic Films</h1>
+      <p style="color: var(--text-muted); font-size: 0.85rem;">View, browse, and remove published videos.</p>
+    </div>
+    <a href="/admin/upload-video" class="btn btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.75rem; border-radius: 6px;">+ Upload Video</a>
+  </div>
+
+  <!-- Flash Messages -->
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success">
+      <span><%= success %></span>
+      <button class="alert-close">&times;</button>
+    </div>
+  <% } %>
+  
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error">
+      <span><%= error %></span>
+      <button class="alert-close">&times;</button>
+    </div>
+  <% } %>
+
+  <!-- Video Management -->
+  <div class="admin-card" style="margin-top: 1rem;">
+    <% if (videos.length === 0) { %>
+      <div style="text-align: center; padding: 3rem 1.5rem;">
+        <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 0.5rem;">No films uploaded yet</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Publish your first film to start showcasing your portfolio.</p>
+        <a href="/admin/upload-video" class="btn btn-gold" style="border-radius: 6px;">Upload a Film</a>
+      </div>
+    <% } else { %>
+
+      <!-- Desktop Table View (hidden on mobile) -->
+      <div class="table-wrapper desktop-only-table">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 100px;">Cover</th>
+              <th>Film Title</th>
+              <th>Category</th>
+              <th>Source</th>
+              <th>Published Date</th>
+              <th style="width: 80px; text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% videos.forEach(video => { %>
+              <tr>
+                <td>
+                  <div class="admin-table-thumb">
+                    <img src="<%= video.thumbnail %>" alt="Thumbnail" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=150&q=80'">
+                  </div>
+                </td>
+                <td style="font-weight: 500;"><%= video.title %></td>
+                <td><span class="admin-tag"><%= video.category %></span></td>
+                <td>
+                  <span class="admin-tag <%= video.video_type === 'youtube' ? 'admin-tag-youtube' : 'admin-tag-upload' %>">
+                    <%= video.video_type %>
+                  </span>
+                </td>
+                <td><%= new Date(video.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></td>
+                <td style="text-align: center;">
+                  <form action="/admin/video/<%= video.id %>?_method=DELETE" method="POST" class="admin-delete-form">
+                    <button type="submit" class="btn-delete" title="Delete Film">
+                      <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></svg>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card View (hidden on desktop) -->
+      <div class="mobile-cards-list">
+        <% videos.forEach(video => { %>
+          <div class="mobile-item-card">
+            <div class="mobile-item-thumb">
+              <img src="<%= video.thumbnail %>" alt="<%= video.title %>" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=300&q=80'">
+            </div>
+            <div class="mobile-item-info">
+              <h4><%= video.title %></h4>
+              <div class="mobile-item-tags">
+                <span class="admin-tag"><%= video.category %></span>
+                <span class="admin-tag <%= video.video_type === 'youtube' ? 'admin-tag-youtube' : 'admin-tag-upload' %>"><%= video.video_type %></span>
+              </div>
+              <p class="mobile-item-date"><%= new Date(video.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></p>
+            </div>
+            <form action="/admin/video/<%= video.id %>?_method=DELETE" method="POST" class="admin-delete-form mobile-item-delete">
+              <button type="submit" class="btn-delete" title="Delete Film">
+                <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></svg>
+              </button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+
+    <% } %>
+  </div>
+</main>
+
+<%- include('../partials/admin-mobile-nav') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

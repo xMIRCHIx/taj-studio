@@ -1,0 +1,101 @@
+<nav class="navbar">
+  <div class="container">
+    <!-- Brand Logo -->
+    <a href="/" class="nav-logo"><%= settings.store_name %></a>
+
+    <!-- Nav Links (Desktop) -->
+    <ul class="nav-links">
+      <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="/#about" class="nav-link">About Us</a></li>
+      
+      <!-- Videos Dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="/videos" class="nav-link">Films</a>
+        <div class="dropdown-panel">
+          <a href="/videos/wedding" class="dropdown-link">Wedding Films</a>
+          <a href="/videos/prewedding" class="dropdown-link">Pre-Wedding Films</a>
+          <a href="/videos/anniversary" class="dropdown-link">Anniversary Films</a>
+          <a href="/videos/engagement" class="dropdown-link">Engagement Films</a>
+          <a href="/videos/birthday" class="dropdown-link">Birthday Films</a>
+          <a href="/videos/indoor" class="dropdown-link">Indoor Films</a>
+        </div>
+      </li>
+      
+      <!-- Photos Dropdown -->
+      <li class="nav-item has-dropdown">
+        <a href="/photos" class="nav-link">Photography</a>
+        <div class="dropdown-panel">
+          <a href="/photos/wedding" class="dropdown-link">Wedding Portfolio</a>
+          <a href="/photos/prewedding" class="dropdown-link">Pre-Wedding Portfolio</a>
+          <a href="/photos/anniversary" class="dropdown-link">Anniversary Portfolio</a>
+          <a href="/photos/engagement" class="dropdown-link">Engagement Portfolio</a>
+          <a href="/photos/birthday" class="dropdown-link">Birthday Portfolio</a>
+          <a href="/photos/indoor" class="dropdown-link">Indoor Portfolio</a>
+        </div>
+      </li>
+      
+      <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <!-- CTA Button (Desktop) -->
+    <div class="nav-cta">
+      <a href="/contact" class="btn btn-gold" style="padding: 0.7rem 1.5rem; font-size: 0.75rem;">Book a Session</a>
+    </div>
+
+    <!-- Mobile Hamburger Trigger -->
+    <button class="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav" id="mobileNavOverlay">
+  <div class="mobile-nav-drawer">
+    <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close Menu">&times;</button>
+    
+    <ul class="mobile-links">
+      <li><a href="/" class="mobile-link">Home</a></li>
+      <li><a href="/#about" class="mobile-link">About</a></li>
+      
+      <!-- Films Section -->
+      <li>
+        <div class="mobile-nav-item">
+          <a href="/videos" class="mobile-link">Films</a>
+          <button class="mobile-dropdown-toggle-btn" id="filmsTrigger" aria-label="Toggle Submenu"></button>
+        </div>
+        <div class="mobile-dropdown-menu" id="filmsMenu">
+          <a href="/videos" class="mobile-dropdown-link">— View All Films</a>
+          <a href="/videos/wedding" class="mobile-dropdown-link">Wedding Films</a>
+          <a href="/videos/prewedding" class="mobile-dropdown-link">Pre-Wedding</a>
+          <a href="/videos/anniversary" class="mobile-dropdown-link">Anniversary</a>
+          <a href="/videos/engagement" class="mobile-dropdown-link">Engagement</a>
+          <a href="/videos/birthday" class="mobile-dropdown-link">Birthday</a>
+          <a href="/videos/indoor" class="mobile-dropdown-link">Indoor</a>
+        </div>
+      </li>
+      
+      <!-- Photography Section -->
+      <li>
+        <div class="mobile-nav-item">
+          <a href="/photos" class="mobile-link">Photography</a>
+          <button class="mobile-dropdown-toggle-btn" id="photosTrigger" aria-label="Toggle Submenu"></button>
+        </div>
+        <div class="mobile-dropdown-menu" id="photosMenu">
+          <a href="/photos" class="mobile-dropdown-link">— View All Photos</a>
+          <a href="/photos/wedding" class="mobile-dropdown-link">Wedding</a>
+          <a href="/photos/prewedding" class="mobile-dropdown-link">Pre-Wedding</a>
+          <a href="/photos/anniversary" class="mobile-dropdown-link">Anniversary</a>
+          <a href="/photos/engagement" class="mobile-dropdown-link">Engagement</a>
+          <a href="/photos/birthday" class="mobile-dropdown-link">Birthday</a>
+          <a href="/photos/indoor" class="mobile-dropdown-link">Indoor</a>
+        </div>
+      </li>
+      
+      <li><a href="/contact" class="mobile-link">Contact</a></li>
+    </ul>
+    <a href="/contact" class="btn btn-gold" style="width: 100%; margin-top: 1rem;">Book a Session</a>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<%- include('../partials/head') %>
+
+<!-- Admin Nav -->
+<header class="admin-navbar">
+  <a href="/admin/dashboard" class="admin-logo" style="text-decoration: none; color: inherit;">TAJ STUDIO <span>ADMIN</span></a>
+  <a href="/admin/dashboard" class="admin-logout-btn" style="text-decoration: none;">&larr; Dashboard</a>
+</header>
+
+<!-- Main Container -->
+<main class="admin-main" style="max-width: 800px;">
+  <div class="admin-header-row">
+    <div>
+      <h1 class="admin-title">Upload Video Film</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Publish a new cinematic film or trailer to your public portfolio.</p>
+    </div>
+  </div>
+
+  <!-- Flash Messages -->
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success">
+      <span><%= success %></span>
+      <button class="alert-close">&times;</button>
+    </div>
+  <% } %>
+  
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error">
+      <span><%= error %></span>
+      <button class="alert-close">&times;</button>
+    </div>
+  <% } %>
+
+  <!-- Upload Form -->
+  <div class="admin-card" style="margin-top: 1.5rem;">
+    <form action="/admin/upload-video" method="POST" enctype="multipart/form-data">
+      
+      <!-- Video Title -->
+      <div class="form-group">
+        <label for="title">Film Title *</label>
+        <input type="text" id="title" name="title" class="form-control" placeholder="E.g., Ananya & Kabir — Royal Vows in Udaipur" required>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" class="form-control" placeholder="Brief narrative or details about the film shoot..." style="min-height: 100px;"></textarea>
+      </div>
+
+      <div class="form-row">
+        <!-- Category Selector -->
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select id="category" name="category" class="form-control" required>
+            <option value="wedding">Wedding Film</option>
+            <option value="prewedding">Pre-Wedding Story</option>
+            <option value="anniversary">Anniversary Film</option>
+            <option value="engagement">Engagement Teaser</option>
+            <option value="birthday">Birthday Film</option>
+            <option value="indoor">Indoor Portfolio Film</option>
+          </select>
+        </div>
+
+        <!-- Video Type Toggles -->
+        <div class="form-group">
+          <label>Video Hosting Source *</label>
+          <div class="radio-toggle-group">
+            <label class="radio-option">
+              <input type="radio" name="video_type" id="video_type_youtube" value="youtube" checked>
+              YouTube Video
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="video_type" id="video_type_upload" value="upload">
+              Direct Local Upload
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTube URL Input Group (Shown by default) -->
+      <div class="form-group" id="youtube_url_group">
+        <label for="youtube_url">YouTube Video Link / URL *</label>
+        <input type="url" id="youtube_url" name="youtube_url" class="form-control" placeholder="E.g., https://www.youtube.com/watch?v=XXXXXX" required>
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem;">Note: Maxresdefault thumbnail will automatically be extracted from YouTube.</p>
+      </div>
+
+      <!-- Local Video & Thumbnail Upload Group (Hidden by default, shown when local upload chosen) -->
+      <div id="upload_files_group" class="hidden">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="video_file">Select Video File * (MP4/MOV/AVI, max 500MB)</label>
+            <input type="file" id="video_file" name="video_file" class="form-control" accept="video/mp4,video/quicktime,video/x-msvideo">
+          </div>
+          <div class="form-group">
+            <label for="thumbnail">Select Video Cover Photo * (JPG/PNG/WEBP)</label>
+            <input type="file" id="thumbnail" name="thumbnail" class="form-control" accept="image/jpeg,image/png,image/webp">
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: flex-end;">
+        <a href="/admin/dashboard" class="btn btn-outline" style="border-radius: 8px;">Cancel</a>
+        <button type="submit" class="btn btn-gold" style="border-radius: 8px;">Upload & Publish</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<%- include('../partials/admin-mobile-nav') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

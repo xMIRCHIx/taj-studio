@@ -1,0 +1,95 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<!-- Category Hero Header -->
+<header class="landing-hero" style="background-image: url('<%= type === "video" ? "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80" : "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80" %>'); height: 35vh;">
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="/">Home</a> / 
+      <a href="/<%= type === 'video' ? 'videos' : 'photos' %>"><%= type === 'video' ? 'Films' : 'Photography' %></a> / 
+      <span style="color: var(--gold); text-transform: capitalize;"><%= category %></span>
+    </div>
+    <h1 class="section-headline" style="color: var(--white); text-transform: capitalize; margin: 0;"><%= category %> <%= type === 'video' ? 'Films' : 'Portfolio' %></h1>
+  </div>
+</header>
+
+<main class="gallery-section" style="padding: 6rem 0;">
+  <div class="container">
+    
+    <% if (items.length === 0) { %>
+      <!-- Empty Portfolio Alert -->
+      <div class="empty-portfolio">
+        <h3 class="section-headline" style="font-size: 1.5rem; margin-bottom: 0.5rem;">No Content Available</h3>
+        <p style="color: var(--text-muted);">We are currently compiling our portfolio for this category. Please check back soon!</p>
+      </div>
+    <% } else { %>
+      
+      <% if (type === 'video') { %>
+        <!-- 1. VIDEO CATEGORY GRID -->
+        <div class="gallery-grid">
+          <% items.forEach(video => { %>
+            <div class="gallery-card video-card-trigger" 
+                 data-youtube-url="<%= video.youtube_url %>" 
+                 data-video-url="<%= video.file_path %>">
+              <div class="gallery-thumbnail">
+                <img src="<%= video.thumbnail || '/css/placeholder.jpg' %>" 
+                     alt="<%= video.title %>" 
+                     onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80'" 
+                     loading="lazy">
+                <div class="play-badge" style="opacity: 1; transform: translate(-50%, -50%) scale(1); background: rgba(255,255,255,0.9);">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="gallery-info">
+                <span class="gallery-card-tag"><%= video.video_type %> Upload</span>
+                <h3 style="margin-top: 0.5rem;"><%= video.title %></h3>
+                <p><%= video.description || 'Watch our full cinematic film and trailers compiled with luxury direction.' %></p>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+        
+      <% } else { %>
+        <!-- 2. PHOTO MASONRY COLUMNS -->
+        <div class="photo-masonry">
+          <% items.forEach(photo => { %>
+            <div class="photo-item photo-item-trigger" 
+                 data-src="<%= photo.file_path %>" 
+                 data-title="<%= photo.title || 'Fine Photography' %>">
+              <img src="<%= photo.file_path %>" alt="<%= photo.alt_text || photo.title %>" loading="lazy">
+              <div class="photo-hover-overlay">
+                <h3><%= photo.title || 'View Photo' %></h3>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- PAGINATION CONTROLS -->
+      <% if (totalPages > 1) { %>
+        <div class="pagination">
+          <% if (page > 1) { %>
+            <a href="/<%= type === 'video' ? 'videos' : 'photos' %>/<%= category %>?page=<%= page - 1 %>" class="page-btn" aria-label="Previous Page">&laquo;</a>
+          <% } %>
+          
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <a href="/<%= type === 'video' ? 'videos' : 'photos' %>/<%= category %>?page=<%= i %>" 
+               class="page-btn <%= page === i ? 'active' : '' %>">
+              <%= i %>
+            </a>
+          <% } %>
+          
+          <% if (page < totalPages) { %>
+            <a href="/<%= type === 'video' ? 'videos' : 'photos' %>/<%= category %>?page=<%= page + 1 %>" class="page-btn" aria-label="Next Page">&raquo;</a>
+          <% } %>
+        </div>
+      <% } %>
+
+    <% } %>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>

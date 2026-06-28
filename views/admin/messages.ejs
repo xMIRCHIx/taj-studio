@@ -1,0 +1,103 @@
+<%- include('../partials/head') %>
+
+<!-- Admin Nav -->
+<header class="admin-navbar">
+  <a href="/admin/dashboard" class="admin-logo" style="text-decoration: none; color: inherit;">TAJ STUDIO <span>ADMIN</span></a>
+  <a href="/admin/dashboard" class="admin-logout-btn" style="text-decoration: none;">&larr; Dashboard</a>
+</header>
+
+<!-- Main Container -->
+<main class="admin-main">
+  <div class="admin-header-row">
+    <div>
+      <h1 class="admin-title">Client Booking Inquiries</h1>
+      <p style="color: var(--text-muted); font-size: 0.85rem;">Browse and follow up on client requests.</p>
+    </div>
+  </div>
+
+  <!-- Messages Card -->
+  <div class="admin-card" style="margin-top: 1rem;">
+    <% if (messages.length === 0) { %>
+      <div style="text-align: center; padding: 3rem 1.5rem;">
+        <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 0.5rem;">No messages received</h3>
+        <p style="color: var(--text-muted);">Queries submitted through the contact page will show here.</p>
+      </div>
+    <% } else { %>
+
+      <!-- Desktop Table View -->
+      <div class="table-wrapper desktop-only-table">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Client Contact Details</th>
+              <th>Category</th>
+              <th>Preferred Date</th>
+              <th>Vision / Message</th>
+              <th>Submitted Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% messages.forEach(msg => { %>
+              <tr style="vertical-align: top;">
+                <td style="white-space: nowrap; padding-bottom: 1.5rem;">
+                  <div style="font-weight: 600; font-size: 1.05rem; color: var(--dark);"><%= msg.name %></div>
+                  <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+                    Email: <a href="mailto:<%= msg.email %>" style="color: var(--gold);"><%= msg.email %></a>
+                  </div>
+                  <div style="font-size: 0.85rem; color: var(--text-muted);">
+                    Phone: <a href="tel:<%= msg.phone %>" style="color: var(--gold);"><%= msg.phone %></a>
+                  </div>
+                </td>
+                <td style="padding-bottom: 1.5rem;">
+                  <span class="admin-tag" style="background-color: var(--surface); color: var(--text);"><%= msg.event_type %></span>
+                </td>
+                <td style="padding-bottom: 1.5rem; white-space: nowrap;">
+                  <%= msg.event_date ? new Date(msg.event_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Flexible / TBD' %>
+                </td>
+                <td style="min-width: 250px; line-height: 1.5; font-size: 0.9rem; padding-bottom: 1.5rem;">
+                  <div style="white-space: pre-wrap; color: var(--text-muted);"><%= msg.message || 'No specific vision details provided.' %></div>
+                </td>
+                <td style="white-space: nowrap; color: var(--text-muted); font-size: 0.85rem; padding-bottom: 1.5rem;">
+                  <%= new Date(msg.submitted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card View -->
+      <div class="mobile-cards-list">
+        <% messages.forEach(msg => { %>
+          <div class="mobile-item-card" style="flex-direction: column; align-items: stretch;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+              <div>
+                <h4 style="font-size: 1rem; font-weight: 600; color: var(--dark); margin-bottom: 0.15rem;"><%= msg.name %></h4>
+                <div class="mobile-item-tags">
+                  <span class="admin-tag"><%= msg.event_type %></span>
+                  <span style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);"><%= msg.event_date ? new Date(msg.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Flexible' %></span>
+                </div>
+              </div>
+              <span style="font-size: 0.65rem; color: var(--text-muted); font-family: var(--font-mono); white-space: nowrap;">
+                <%= new Date(msg.submitted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) %>
+              </span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.8rem;">
+              <a href="mailto:<%= msg.email %>" style="color: var(--gold); word-break: break-all;"><%= msg.email %></a>
+              <a href="tel:<%= msg.phone %>" style="color: var(--gold);"><%= msg.phone %></a>
+            </div>
+            <% if (msg.message) { %>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.45; border-top: 1px solid var(--border); padding-top: 0.5rem;"><%= msg.message %></p>
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+
+    <% } %>
+  </div>
+</main>
+
+<%- include('../partials/admin-mobile-nav') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

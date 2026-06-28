@@ -1,0 +1,65 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Column 1: Brand & Tagline -->
+      <div class="footer-about">
+        <a href="/" class="footer-logo"><%= settings.store_name %></a>
+        <p><%= settings.footer_about %></p>
+      </div>
+
+      <!-- Column 2: Navigation Links -->
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/#about">About Us</a></li>
+          <li><a href="/videos">Cinematic Films</a></li>
+          <li><a href="/photos">Fine Photography</a></li>
+          <li><a href="/contact">Bookings & Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Contact details -->
+      <div class="footer-column footer-contact">
+        <h4>Get In Touch</h4>
+        <p style="color: var(--white); font-weight: 500;"><%= settings.store_name %> HQ</p>
+        <p><%= settings.contact_address %></p>
+        <p style="margin-top: 1rem;">Phone: <%= settings.contact_phone %></p>
+        <p>Email: <%= settings.contact_email %></p>
+      </div>
+    </div>
+
+    <!-- Bottom copyright bar -->
+    <div class="footer-bottom">
+      <p>&copy; <%= new Date().getFullYear() %> Taj Studio. All Rights Reserved. Crafted with love in India.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- GLOBAL VIDEO MODAL CONTAINER -->
+<div id="videoModal" class="modal">
+  <button class="modal-close" aria-label="Close Modal">&times;</button>
+  <div class="modal-content">
+    <div id="videoPlayerContainer" style="width: 100%; height: 100%;">
+      <!-- Iframe or Video Tag Injected via JS -->
+    </div>
+  </div>
+</div>
+
+<!-- GLOBAL PHOTO LIGHTBOX CONTAINER -->
+<div id="lightboxModal" class="modal">
+  <button class="modal-close" id="lightboxClose" aria-label="Close Lightbox">&times;</button>
+  <div class="lightbox-container">
+    <div class="lightbox-img-wrapper">
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous Image">&lsaquo;</button>
+      <img id="lightboxImg" class="lightbox-img" src="" alt="Taj Studio Lightbox Preview">
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next Image">&rsaquo;</button>
+    </div>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<!-- Link Global Client Scripts -->
+<script src="/js/main.js"></script>
+</body>
+</html>

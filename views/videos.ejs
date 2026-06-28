@@ -1,0 +1,74 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<!-- Video Landing Hero -->
+<header class="landing-hero" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');">
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    <span class="eyebrow" style="color: var(--gold); margin-bottom: 1rem;">Cinematic Films</span>
+    <h1 class="display-headline" style="font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 0;">Our Film Portfolio</h1>
+  </div>
+</header>
+
+<!-- Category Selection Grid -->
+<section class="category-directory">
+  <div class="container">
+    <div class="category-directory-grid">
+      <!-- 1. Wedding Films -->
+      <a href="/videos/wedding" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Wedding Films Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Wedding</h3>
+          <p>Royal Wedding Highlights & Feature Films</p>
+        </div>
+      </a>
+      
+      <!-- 2. Pre-Wedding Films -->
+      <a href="/videos/prewedding" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80" alt="Pre-Wedding Films Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Pre-Wedding</h3>
+          <p>Love Story Concepts & Cinematic Promos</p>
+        </div>
+      </a>
+      
+      <!-- 3. Anniversary Films -->
+      <a href="/videos/anniversary" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Anniversary Films Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Anniversary</h3>
+          <p>Vow Renewal Stories & Milestones</p>
+        </div>
+      </a>
+      
+      <!-- 4. Engagement Films -->
+      <a href="/videos/engagement" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Engagement Films Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Engagement</h3>
+          <p>Vows, Proposal Re-enactment & High-impact Teasers</p>
+        </div>
+      </a>
+      
+      <!-- 5. Birthday Films -->
+      <a href="/videos/birthday" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Birthday Films Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Birthday</h3>
+          <p>Milestone Celebrations & Dynamic Event Reels</p>
+        </div>
+      </a>
+      
+      <!-- 6. Indoor Studio Films -->
+      <a href="/videos/indoor" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1520854221256-174b1ec358ef?auto=format&fit=crop&w=600&q=80" alt="Indoor Studio Films Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Indoor</h3>
+          <p>Modeling Reels, Fashion Portfolios & Studio Shoots</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

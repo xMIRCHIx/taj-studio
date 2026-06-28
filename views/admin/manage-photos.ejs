@@ -1,0 +1,72 @@
+<%- include('../partials/head') %>
+
+<!-- Admin Nav -->
+<header class="admin-navbar">
+  <a href="/admin/dashboard" class="admin-logo" style="text-decoration: none; color: inherit;">TAJ STUDIO <span>ADMIN</span></a>
+  <a href="/admin/dashboard" class="admin-logout-btn" style="text-decoration: none;">&larr; Dashboard</a>
+</header>
+
+<!-- Main Container -->
+<main class="admin-main">
+  <div class="admin-header-row">
+    <div>
+      <h1 class="admin-title">Manage Fine Photography</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Browse and clean up published photo files and alternative text parameters.</p>
+    </div>
+    <a href="/admin/upload-photo" class="btn btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.75rem; border-radius: 6px;">+ Upload Photos</a>
+  </div>
+
+  <!-- Flash Messages -->
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success">
+      <span><%= success %></span>
+      <button class="alert-close">&times;</button>
+    </div>
+  <% } %>
+  
+  <% if (error && error.length > 0) { %>
+    <div class="alert alert-error">
+      <span><%= error %></span>
+      <button class="alert-close">&times;</button>
+    </div>
+  <% } %>
+
+  <!-- Content Section -->
+  <% if (photos.length === 0) { %>
+    <div class="admin-card" style="margin-top: 1.5rem; text-align: center; padding: 4rem 2rem;">
+      <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 0.5rem;">No photos uploaded yet</h3>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Fill your category portfolios by uploading premium resolution photos.</p>
+      <a href="/admin/upload-photo" class="btn btn-gold" style="border-radius: 6px;">Upload Photos</a>
+    </div>
+  <% } else { %>
+    <div class="admin-photos-grid">
+      <% photos.forEach(photo => { %>
+        <div class="admin-photo-card reveal">
+          <div class="admin-photo-card-thumb">
+            <img src="<%= photo.file_path %>" alt="<%= photo.alt_text %>" loading="lazy">
+          </div>
+          <div class="admin-photo-card-details">
+            <div>
+              <span class="admin-tag" style="background-color: var(--surface); color: var(--text);"><%= photo.category %></span>
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <%= photo.alt_text || 'No Alt Text' %>
+              </p>
+            </div>
+            
+            <!-- DELETE Photo Form -->
+            <form action="/admin/photo/<%= photo.id %>?_method=DELETE" method="POST" class="admin-delete-form">
+              <button type="submit" class="btn-delete" title="Delete Photo" style="color: var(--danger);">
+                <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</main>
+
+<%- include('../partials/admin-mobile-nav') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

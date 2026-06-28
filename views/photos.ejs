@@ -1,0 +1,74 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<!-- Photo Landing Hero -->
+<header class="landing-hero" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80');">
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    <span class="eyebrow" style="color: var(--gold); margin-bottom: 1rem;">Fine Photography</span>
+    <h1 class="display-headline" style="font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 0;">Our Photo Galleries</h1>
+  </div>
+</header>
+
+<!-- Category Selection Grid -->
+<section class="category-directory">
+  <div class="container">
+    <div class="category-directory-grid">
+      <!-- 1. Wedding Photography -->
+      <a href="/photos/wedding" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Wedding Photography Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Wedding</h3>
+          <p>Royal Candids & Wedding Day Portfolios</p>
+        </div>
+      </a>
+      
+      <!-- 2. Pre-Wedding Photography -->
+      <a href="/photos/prewedding" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80" alt="Pre-Wedding Photography Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Pre-Wedding</h3>
+          <p>Cinematic Outdoor Couple Portraits</p>
+        </div>
+      </a>
+      
+      <!-- 3. Anniversary Photography -->
+      <a href="/photos/anniversary" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Anniversary Photography Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Anniversary</h3>
+          <p>Love Eternal, Vows & Family Gatherings</p>
+        </div>
+      </a>
+      
+      <!-- 4. Engagement Photography -->
+      <a href="/photos/engagement" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80" alt="Engagement Photography Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Engagement</h3>
+          <p>Ring Exchange Portfolios & Couple Shoots</p>
+        </div>
+      </a>
+      
+      <!-- 5. Birthday Photography -->
+      <a href="/photos/birthday" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Birthday Photography Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Birthday</h3>
+          <p>Vibrant Event & Theme Birthday Candid Coverage</p>
+        </div>
+      </a>
+      
+      <!-- 6. Indoor Studio Photography -->
+      <a href="/photos/indoor" class="directory-card reveal">
+        <img src="https://images.unsplash.com/photo-1520854221256-174b1ec358ef?auto=format&fit=crop&w=600&q=80" alt="Indoor Studio Photography Category" loading="lazy">
+        <div class="directory-card-overlay">
+          <h3>Indoor</h3>
+          <p>Modeling Portfolios, High Fashion & Headshots</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
