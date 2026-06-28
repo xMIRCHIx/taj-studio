@@ -16,6 +16,21 @@ app.set('views', path.join(__dirname, 'views'));
 // CORS setup
 app.use(cors());
 
+// Fallback middleware for uploads to load from live site if missing locally
+const fs = require('fs');
+app.use('/uploads', (req, res, next) => {
+  const localPath = path.join(__dirname, 'public/uploads', req.path);
+  if (fs.existsSync(localPath)) {
+    return next();
+  }
+  // ONLY redirect if running locally (localhost) to prevent redirect loops on production
+  const host = req.get('host') || '';
+  if (host.includes('localhost') || host.includes('127.0.0.1')) {
+    return res.redirect(`https://tajstudio.info/uploads${req.path}`);
+  }
+  next();
+});
+
 // Static files serving
 app.use(express.static(path.join(__dirname, 'public')));
 
