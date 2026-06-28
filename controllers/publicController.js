@@ -44,12 +44,19 @@ exports.videoCategory = async (req, res, next) => {
     const offset = (page - 1) * limit;
     
     const [videos] = await db.query(
-      'SELECT * FROM videos WHERE category = ? ORDER BY created_at DESC LIMIT ? OFFSET ?',
+      'SELECT * FROM videos WHERE category = ? ORDER BY order_index ASC, created_at DESC LIMIT ? OFFSET ?',
       [category, limit, offset]
     );
     
     const [[{ total }]] = await db.query('SELECT COUNT(*) as total FROM videos WHERE category = ?', [category]);
     const totalPages = Math.ceil(total / limit) || 1;
+
+    // Fetch page banner
+    const [[bannerRow]] = await db.query(
+      'SELECT setting_value FROM settings WHERE setting_key = ?',
+      [`banner_videos_${category}`]
+    );
+    const pageBanner = bannerRow ? bannerRow.setting_value : null;
     
     res.render('category', { 
       title: `${category.charAt(0).toUpperCase() + category.slice(1)} Films — Taj Studio`, 
@@ -58,7 +65,8 @@ exports.videoCategory = async (req, res, next) => {
       items: videos, 
       page, 
       totalPages,
-      navSolid: true
+      navSolid: true,
+      pageBanner
     });
   } catch (err) {
     console.error('Video Category Error:', err);
@@ -77,12 +85,19 @@ exports.photoCategory = async (req, res, next) => {
     const offset = (page - 1) * limit;
     
     const [photos] = await db.query(
-      'SELECT * FROM photos WHERE category = ? ORDER BY created_at DESC LIMIT ? OFFSET ?',
+      'SELECT * FROM photos WHERE category = ? ORDER BY order_index ASC, created_at DESC LIMIT ? OFFSET ?',
       [category, limit, offset]
     );
     
     const [[{ total }]] = await db.query('SELECT COUNT(*) as total FROM photos WHERE category = ?', [category]);
     const totalPages = Math.ceil(total / limit) || 1;
+
+    // Fetch page banner
+    const [[bannerRow]] = await db.query(
+      'SELECT setting_value FROM settings WHERE setting_key = ?',
+      [`banner_photos_${category}`]
+    );
+    const pageBanner = bannerRow ? bannerRow.setting_value : null;
     
     res.render('category', { 
       title: `${category.charAt(0).toUpperCase() + category.slice(1)} Photography — Taj Studio`, 
@@ -91,7 +106,8 @@ exports.photoCategory = async (req, res, next) => {
       items: photos, 
       page, 
       totalPages,
-      navSolid: true
+      navSolid: true,
+      pageBanner
     });
   } catch (err) {
     console.error('Photo Category Error:', err);

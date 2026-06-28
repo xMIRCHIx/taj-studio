@@ -48,6 +48,7 @@
         <button class="tab-btn" data-tab="contact">Contact Details</button>
         <button class="tab-btn" data-tab="hero">Hero Slideshow</button>
         <button class="tab-btn" data-tab="ugc">UGC Reels Carousel</button>
+        <button class="tab-btn" data-tab="banners">Page Banners</button>
       </div>
     </div>
 
@@ -278,10 +279,64 @@
           <% } %>
         </div>
       </div>
+      <!-- 6. BANNERS PANEL -->
+      <div class="tab-panel" id="panel-banners">
+        <form action="/admin/settings/banners" method="POST" enctype="multipart/form-data">
+          <div class="panel-header">
+            <h3>Page Banner Images</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Set the background banner for each category page. You can upload a file or paste an image URL.</p>
+          </div>
+
+          <div style="margin-top: 2rem;">
+            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);">📷 Photography Pages</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+              <% const photoCats = ['wedding','prewedding','anniversary','engagement','birthday','indoor']; %>
+              <% photoCats.forEach(cat => { %>
+                <% const key = `banner_photos_${cat}`; %>
+                <div class="admin-card" style="padding: 1rem;">
+                  <div style="font-weight: 600; text-transform: capitalize; margin-bottom: 0.75rem; font-size: 0.9rem;"><%= cat %> Photography</div>
+                  <% if (settings[key]) { %>
+                    <img src="<%= settings[key] %>" style="width:100%; height:80px; object-fit:cover; border-radius:6px; margin-bottom:0.75rem;" onerror="this.style.display='none'">
+                  <% } else { %>
+                    <div style="width:100%; height:80px; border-radius:6px; background:var(--surface); margin-bottom:0.75rem; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.8rem;">No banner set</div>
+                  <% } %>
+                  <input type="url" name="<%= key %>" placeholder="Paste image URL..." value="<%= settings[key] && settings[key].startsWith('http') ? settings[key] : '' %>" class="form-input" style="font-size:0.8rem; margin-bottom:0.5rem;">
+                  <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:0.25rem;">Or upload file:</label>
+                  <input type="file" name="<%= key %>" accept="image/*" style="font-size:0.8rem; width:100%;">
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <div style="margin-top: 2.5rem;">
+            <h4 style="font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);">🎬 Films Pages</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+              <% const videoCats = ['wedding','prewedding','anniversary','engagement','birthday','indoor']; %>
+              <% videoCats.forEach(cat => { %>
+                <% const vkey = `banner_videos_${cat}`; %>
+                <div class="admin-card" style="padding: 1rem;">
+                  <div style="font-weight: 600; text-transform: capitalize; margin-bottom: 0.75rem; font-size: 0.9rem;"><%= cat %> Films</div>
+                  <% if (settings[vkey]) { %>
+                    <img src="<%= settings[vkey] %>" style="width:100%; height:80px; object-fit:cover; border-radius:6px; margin-bottom:0.75rem;" onerror="this.style.display='none'">
+                  <% } else { %>
+                    <div style="width:100%; height:80px; border-radius:6px; background:var(--surface); margin-bottom:0.75rem; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.8rem;">No banner set</div>
+                  <% } %>
+                  <input type="url" name="<%= vkey %>" placeholder="Paste image URL..." value="<%= settings[vkey] && settings[vkey].startsWith('http') ? settings[vkey] : '' %>" class="form-input" style="font-size:0.8rem; margin-bottom:0.5rem;">
+                  <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:0.25rem;">Or upload file:</label>
+                  <input type="file" name="<%= vkey %>" accept="image/*" style="font-size:0.8rem; width:100%;">
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+            <button type="submit" class="btn btn-gold">Save All Banners</button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
-
-
 </main>
 
 <!-- Simple Tab Switching Client Logic -->

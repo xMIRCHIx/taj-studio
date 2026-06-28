@@ -32,4 +32,24 @@ router.post('/settings/hero/delete/:id', ctrl.deleteHeroSlide);
 router.post('/settings/ugc/add', upload.array('ugc_files', 24), ctrl.addUgcItems);
 router.post('/settings/ugc/delete/:id', ctrl.deleteUgcItem);
 
+// Banner update route
+router.post('/settings/banners', upload.fields([
+  { name: 'banner_photos_wedding', maxCount: 1 },
+  { name: 'banner_photos_prewedding', maxCount: 1 },
+  { name: 'banner_photos_anniversary', maxCount: 1 },
+  { name: 'banner_photos_engagement', maxCount: 1 },
+  { name: 'banner_photos_birthday', maxCount: 1 },
+  { name: 'banner_photos_indoor', maxCount: 1 },
+  { name: 'banner_videos_wedding', maxCount: 1 },
+  { name: 'banner_videos_prewedding', maxCount: 1 },
+  { name: 'banner_videos_anniversary', maxCount: 1 },
+  { name: 'banner_videos_engagement', maxCount: 1 },
+  { name: 'banner_videos_birthday', maxCount: 1 },
+  { name: 'banner_videos_indoor', maxCount: 1 },
+]), ctrl.updateBanners);
+
+// Reorder routes (AJAX)
+router.put('/reorder-photos', ctrl.reorderPhotos);
+router.put('/reorder-videos', ctrl.reorderVideos);
+
 module.exports = router;

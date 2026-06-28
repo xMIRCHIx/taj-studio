@@ -95,7 +95,7 @@ exports.uploadPhotos = async (req, res, next) => {
 
 exports.manageVideos = async (req, res, next) => {
   try {
-    const [videos] = await db.query('SELECT * FROM videos ORDER BY created_at DESC');
+    const [videos] = await db.query('SELECT * FROM videos ORDER BY order_index ASC, created_at DESC');
     res.render('admin/manage-videos', { title: 'Manage Videos', videos });
   } catch (err) {
     console.error('Manage Videos Error:', err);
@@ -105,7 +105,7 @@ exports.manageVideos = async (req, res, next) => {
 
 exports.managePhotos = async (req, res, next) => {
   try {
-    const [photos] = await db.query('SELECT * FROM photos ORDER BY created_at DESC');
+    const [photos] = await db.query('SELECT * FROM photos ORDER BY order_index ASC, created_at DESC');
     res.render('admin/manage-photos', { title: 'Manage Photos', photos });
   } catch (err) {
     console.error('Manage Photos Error:', err);
@@ -196,6 +196,76 @@ exports.settingsPage = async (req, res, next) => {
   } catch (err) {
     console.error('Settings Page Error:', err);
     next(err);
+  }
+};
+
+// =============================================================
+// REORDER CONTROLLERS (AJAX)
+// =============================================================
+
+exports.reorderPhotos = async (req, res) => {
+  try {
+    const { order } = req.body; // [{id, order_index}, ...]
+    if (!Array.isArray(order)) return res.status(400).json({ error: 'Invalid payload' });
+    for (const item of order) {
+      await db.query('UPDATE photos SET order_index = ? WHERE id = ?', [item.order_index, item.id]);
+    }
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Reorder Photos Error:', err);
+    res.status(500).json({ error: 'Failed to reorder' });
+  }
+};
+
+exports.reorderVideos = async (req, res) => {
+  try {
+    const { order } = req.body;
+    if (!Array.isArray(order)) return res.status(400).json({ error: 'Invalid payload' });
+    for (const item of order) {
+      await db.query('UPDATE videos SET order_index = ? WHERE id = ?', [item.order_index, item.id]);
+    }
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Reorder Videos Error:', err);
+    res.status(500).json({ error: 'Failed to reorder' });
+  }
+};
+
+// =============================================================
+// BANNER UPDATE CONTROLLER
+// =============================================================
+
+exports.updateBanners = async (req, res, next) => {
+  try {
+    const bannerKeys = [
+      'banner_photos_wedding','banner_photos_prewedding','banner_photos_anniversary',
+      'banner_photos_engagement','banner_photos_birthday','banner_photos_indoor',
+      'banner_videos_wedding','banner_videos_prewedding','banner_videos_anniversary',
+      'banner_videos_engagement','banner_videos_birthday','banner_videos_indoor'
+    ];
+    for (const key of bannerKeys) {
+      // Check if a file was uploaded for this key
+      if (req.files && req.files[key] && req.files[key][0]) {
+        const filePath = '/uploads/photos/' + req.files[key][0].filename;
+        await db.query(
+          'INSERT INTO settings (setting_key, setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?',
+          [key, filePath, filePath]
+        );
+      } else if (req.body[key] && req.body[key].trim()) {
+        // URL input
+        const url = req.body[key].trim();
+        await db.query(
+          'INSERT INTO settings (setting_key, setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?',
+          [key, url, url]
+        );
+      }
+    }
+    req.flash('success', 'Page banners updated successfully!');
+    res.redirect('/admin/settings?tab=banners');
+  } catch (err) {
+    console.error('Update Banners Error:', err);
+    req.flash('error', 'Failed to update banners. ' + err.message);
+    res.redirect('/admin/settings?tab=banners');
   }
 };
 

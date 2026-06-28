@@ -1,8 +1,13 @@
 <%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
+<%
+  const defaultVideoBanner = 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80';
+  const defaultPhotoBanner = 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80';
+  const heroBg = pageBanner || (type === 'video' ? defaultVideoBanner : defaultPhotoBanner);
+%>
 <!-- Category Hero Header -->
-<header class="landing-hero" style="background-image: url('<%= type === "video" ? "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80" : "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80" %>'); height: 35vh;">
+<header class="landing-hero" style="background-image: url('<%= heroBg %>'); height: 35vh;">
   <div class="hero-overlay"></div>
   <div class="hero-content container">
     <!-- Breadcrumb -->

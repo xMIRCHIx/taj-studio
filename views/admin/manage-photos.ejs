@@ -11,7 +11,7 @@
   <div class="admin-header-row">
     <div>
       <h1 class="admin-title">Manage Fine Photography</h1>
-      <p style="color: var(--text-muted); font-size: 0.95rem;">Browse and clean up published photo files and alternative text parameters.</p>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Drag cards to reorder. Changes save automatically and reflect live on the website.</p>
     </div>
     <a href="/admin/upload-photo" class="btn btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.75rem; border-radius: 6px;">+ Upload Photos</a>
   </div>
@@ -31,6 +31,13 @@
     </div>
   <% } %>
 
+  <!-- Drag hint -->
+  <% if (photos.length > 0) { %>
+  <div id="reorderStatus" style="display:none; padding: 0.6rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem; background: #d4edda; color: #155724;">
+    ✅ Order saved successfully!
+  </div>
+  <% } %>
+
   <!-- Content Section -->
   <% if (photos.length === 0) { %>
     <div class="admin-card" style="margin-top: 1.5rem; text-align: center; padding: 4rem 2rem;">
@@ -39,9 +46,17 @@
       <a href="/admin/upload-photo" class="btn btn-gold" style="border-radius: 6px;">Upload Photos</a>
     </div>
   <% } else { %>
-    <div class="admin-photos-grid">
+    <div class="admin-photos-grid" id="photoDragGrid">
       <% photos.forEach(photo => { %>
-        <div class="admin-photo-card reveal">
+        <div class="admin-photo-card reveal draggable-card" 
+             draggable="true" 
+             data-id="<%= photo.id %>">
+          <div class="drag-handle" title="Drag to reorder">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+          </div>
           <div class="admin-photo-card-thumb">
             <img src="<%= photo.file_path %>" alt="<%= photo.alt_text %>" loading="lazy">
           </div>
@@ -68,5 +83,87 @@
 
 <%- include('../partials/admin-mobile-nav') %>
 <script src="/js/main.js"></script>
+
+<style>
+.draggable-card { cursor: grab; position: relative; transition: opacity 0.2s, transform 0.2s; }
+.draggable-card:active { cursor: grabbing; }
+.draggable-card.dragging { opacity: 0.4; transform: scale(0.97); }
+.draggable-card.drag-over { outline: 2px dashed var(--gold); outline-offset: 3px; }
+.drag-handle {
+  position: absolute; top: 8px; left: 8px; z-index: 10;
+  background: rgba(255,255,255,0.85); border-radius: 4px;
+  padding: 4px 5px; color: #888; cursor: grab;
+  display: flex; align-items: center;
+}
+</style>
+
+<script>
+(function() {
+  const grid = document.getElementById('photoDragGrid');
+  if (!grid) return;
+  
+  let dragged = null;
+
+  grid.addEventListener('dragstart', e => {
+    dragged = e.target.closest('.draggable-card');
+    if (dragged) {
+      dragged.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    }
+  });
+
+  grid.addEventListener('dragend', e => {
+    const card = e.target.closest('.draggable-card');
+    if (card) card.classList.remove('dragging');
+    document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+    saveOrder();
+  });
+
+  grid.addEventListener('dragover', e => {
+    e.preventDefault();
+    const target = e.target.closest('.draggable-card');
+    if (target && target !== dragged) {
+      document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+      target.classList.add('drag-over');
+    }
+  });
+
+  grid.addEventListener('drop', e => {
+    e.preventDefault();
+    const target = e.target.closest('.draggable-card');
+    if (target && dragged && target !== dragged) {
+      const allCards = [...grid.querySelectorAll('.draggable-card')];
+      const draggedIdx = allCards.indexOf(dragged);
+      const targetIdx = allCards.indexOf(target);
+      if (draggedIdx < targetIdx) {
+        grid.insertBefore(dragged, target.nextSibling);
+      } else {
+        grid.insertBefore(dragged, target);
+      }
+    }
+  });
+
+  function saveOrder() {
+    const cards = [...grid.querySelectorAll('.draggable-card')];
+    const order = cards.map((card, i) => ({ id: parseInt(card.dataset.id), order_index: i }));
+    
+    fetch('/admin/reorder-photos', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        const status = document.getElementById('reorderStatus');
+        status.style.display = 'block';
+        setTimeout(() => { status.style.display = 'none'; }, 2500);
+      }
+    })
+    .catch(console.error);
+  }
+})();
+</script>
+
 </body>
 </html>

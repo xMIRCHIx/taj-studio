@@ -11,7 +11,7 @@
   <div class="admin-header-row">
     <div>
       <h1 class="admin-title">Manage Cinematic Films</h1>
-      <p style="color: var(--text-muted); font-size: 0.85rem;">View, browse, and remove published videos.</p>
+      <p style="color: var(--text-muted); font-size: 0.85rem;">Drag rows to reorder. Changes save automatically and reflect live on the website.</p>
     </div>
     <a href="/admin/upload-video" class="btn btn-gold" style="padding: 0.75rem 1.5rem; font-size: 0.75rem; border-radius: 6px;">+ Upload Video</a>
   </div>
@@ -31,6 +31,13 @@
     </div>
   <% } %>
 
+  <!-- Reorder status -->
+  <% if (videos.length > 0) { %>
+  <div id="reorderStatusVid" style="display:none; padding: 0.6rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem; background: #d4edda; color: #155724;">
+    ✅ Order saved successfully!
+  </div>
+  <% } %>
+
   <!-- Video Management -->
   <div class="admin-card" style="margin-top: 1rem;">
     <% if (videos.length === 0) { %>
@@ -41,11 +48,12 @@
       </div>
     <% } else { %>
 
-      <!-- Desktop Table View (hidden on mobile) -->
+      <!-- Desktop Table View -->
       <div class="table-wrapper desktop-only-table">
         <table class="admin-table">
           <thead>
             <tr>
+              <th style="width: 30px;"></th>
               <th style="width: 100px;">Cover</th>
               <th>Film Title</th>
               <th>Category</th>
@@ -54,9 +62,10 @@
               <th style="width: 80px; text-align: center;">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="videoDragTable">
             <% videos.forEach(video => { %>
-              <tr>
+              <tr class="draggable-row" draggable="true" data-id="<%= video.id %>" style="cursor: grab;">
+                <td style="color:#ccc; font-size:1.2rem; cursor:grab; user-select:none;">⠿</td>
                 <td>
                   <div class="admin-table-thumb">
                     <img src="<%= video.thumbnail %>" alt="Thumbnail" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=150&q=80'">
@@ -83,10 +92,10 @@
         </table>
       </div>
 
-      <!-- Mobile Card View (hidden on desktop) -->
-      <div class="mobile-cards-list">
+      <!-- Mobile Card View -->
+      <div class="mobile-cards-list" id="videoDragMobile">
         <% videos.forEach(video => { %>
-          <div class="mobile-item-card">
+          <div class="mobile-item-card draggable-row" draggable="true" data-id="<%= video.id %>" style="cursor: grab;">
             <div class="mobile-item-thumb">
               <img src="<%= video.thumbnail %>" alt="<%= video.title %>" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=300&q=80'">
             </div>
@@ -113,5 +122,74 @@
 
 <%- include('../partials/admin-mobile-nav') %>
 <script src="/js/main.js"></script>
+
+<style>
+.draggable-row { transition: opacity 0.2s; }
+.draggable-row.dragging { opacity: 0.4; }
+.draggable-row.drag-over-row { outline: 2px dashed var(--gold); }
+</style>
+
+<script>
+(function() {
+  // Shared save function
+  function saveVideoOrder(container, selector) {
+    const rows = [...container.querySelectorAll(selector)];
+    const order = rows.map((r, i) => ({ id: parseInt(r.dataset.id), order_index: i }));
+    fetch('/admin/reorder-videos', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        const s = document.getElementById('reorderStatusVid');
+        s.style.display = 'block';
+        setTimeout(() => { s.style.display = 'none'; }, 2500);
+      }
+    })
+    .catch(console.error);
+  }
+
+  function makeDraggable(container, rowSelector, saveContainer, saveSel) {
+    if (!container) return;
+    let dragged = null;
+    container.addEventListener('dragstart', e => {
+      dragged = e.target.closest(rowSelector);
+      if (dragged) dragged.classList.add('dragging');
+    });
+    container.addEventListener('dragend', e => {
+      const el = e.target.closest(rowSelector);
+      if (el) el.classList.remove('dragging');
+      container.querySelectorAll('.drag-over-row').forEach(el => el.classList.remove('drag-over-row'));
+      saveVideoOrder(saveContainer || container, saveSel || rowSelector);
+    });
+    container.addEventListener('dragover', e => {
+      e.preventDefault();
+      const target = e.target.closest(rowSelector);
+      if (target && target !== dragged) {
+        container.querySelectorAll('.drag-over-row').forEach(el => el.classList.remove('drag-over-row'));
+        target.classList.add('drag-over-row');
+      }
+    });
+    container.addEventListener('drop', e => {
+      e.preventDefault();
+      const target = e.target.closest(rowSelector);
+      if (target && dragged && target !== dragged) {
+        const all = [...container.querySelectorAll(rowSelector)];
+        if (all.indexOf(dragged) < all.indexOf(target)) {
+          container.insertBefore(dragged, target.nextSibling);
+        } else {
+          container.insertBefore(dragged, target);
+        }
+      }
+    });
+  }
+
+  makeDraggable(document.getElementById('videoDragTable'), '.draggable-row');
+  makeDraggable(document.getElementById('videoDragMobile'), '.draggable-row');
+})();
+</script>
+
 </body>
 </html>
