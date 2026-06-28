@@ -51,5 +51,7 @@ router.post('/settings/banners', upload.fields([
 // Reorder routes (AJAX)
 router.put('/reorder-photos', ctrl.reorderPhotos);
 router.put('/reorder-videos', ctrl.reorderVideos);
+router.put('/reorder-hero-slides', ctrl.reorderHeroSlides);
+router.put('/reorder-ugc-items', ctrl.reorderUgcItems);
 
 module.exports = router;

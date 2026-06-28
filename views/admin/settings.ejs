@@ -203,18 +203,18 @@
 
         <!-- Slides List -->
         <div class="settings-subcard" style="margin-top: 2rem;">
-          <h4>Current Slide Collection</h4>
+          <h4>Current Slide Collection <small style="font-weight:400; color:var(--text-muted); font-size:0.8rem;">— drag to reorder</small></h4>
           <% if (heroSlides.length === 0) { %>
             <p style="color: var(--text-muted); text-align: center; padding: 2rem;">No custom slides uploaded. Running on fallback image.</p>
           <% } else { %>
-            <div class="slides-media-grid">
+            <div id="reorderStatusHero" style="display:none; padding:0.5rem 1rem; border-radius:6px; font-size:0.82rem; font-weight:600; margin-bottom:0.75rem; background:#d4edda; color:#155724;">✅ Slide order saved!</div>
+            <div class="slides-media-grid" id="heroDragGrid">
               <% heroSlides.forEach(slide => { %>
-                <div class="slide-media-card">
+                <div class="slide-media-card draggable-card" draggable="true" data-id="<%= slide.id %>" style="cursor:grab;">
                   <img src="<%= slide.image_path %>" alt="<%= slide.title || 'Hero Slide' %>">
                   <div class="slide-media-info">
                     <h5><%= slide.title || 'Untitled' %></h5>
                     <p style="font-size: 0.75rem; color: var(--text-muted);"><%= slide.subtitle || 'No subtitle' %></p>
-                    <span style="font-size: 0.7rem; font-family: var(--font-mono); color: var(--gold);">Order: <%= slide.order_index %></span>
                   </div>
                   <form action="/admin/settings/hero/delete/<%= slide.id %>" method="POST" class="delete-overlay-form" onsubmit="return confirm('Are you sure you want to delete this hero slide?')">
                     <button type="submit" class="slide-delete-btn" aria-label="Delete Slide">&times;</button>
@@ -254,13 +254,14 @@
 
         <!-- UGC Items Grid List -->
         <div class="settings-subcard" style="margin-top: 2rem;">
-          <h4>Social Media Stories Collection</h4>
+          <h4>Social Media Stories Collection <small style="font-weight:400; color:var(--text-muted); font-size:0.8rem;">— drag to reorder</small></h4>
           <% if (ugcItems.length === 0) { %>
             <p style="color: var(--text-muted); text-align: center; padding: 2rem;">No custom reels uploaded. Running on fallback portrait assets.</p>
           <% } else { %>
-            <div class="ugc-media-grid">
+            <div id="reorderStatusUgc" style="display:none; padding:0.5rem 1rem; border-radius:6px; font-size:0.82rem; font-weight:600; margin-bottom:0.75rem; background:#d4edda; color:#155724;">✅ UGC order saved!</div>
+            <div class="ugc-media-grid" id="ugcDragGrid">
               <% ugcItems.forEach(item => { %>
-                <div class="ugc-media-card">
+                <div class="ugc-media-card draggable-card" draggable="true" data-id="<%= item.id %>" style="cursor:grab;">
                   <% if (item.type === 'video') { %>
                     <video src="<%= item.file_path %>" muted controls style="width: 100%; height: 180px; object-fit: cover; border-radius: 4px;"></video>
                   <% } else { %>
@@ -268,7 +269,6 @@
                   <% } %>
                   <div class="ugc-media-info">
                     <span class="admin-tag" style="font-size: 0.65rem; padding: 0.1rem 0.4rem; display: inline-block; margin-bottom: 0.25rem;"><%= item.type.toUpperCase() %></span>
-                    <p style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--gold);">Order: <%= item.order_index %></p>
                   </div>
                   <form action="/admin/settings/ugc/delete/<%= item.id %>" method="POST" class="delete-overlay-form" onsubmit="return confirm('Are you sure you want to delete this Reel item?')">
                     <button type="submit" class="slide-delete-btn" aria-label="Delete UGC">&times;</button>
@@ -427,8 +427,138 @@
         }
       });
     });
+
+    // Drag and drop for Hero Slides
+    const heroGrid = document.getElementById('heroDragGrid');
+    if (heroGrid) {
+      let dragged = null;
+      heroGrid.addEventListener('dragstart', e => {
+        dragged = e.target.closest('.draggable-card');
+        if (dragged) dragged.classList.add('dragging');
+      });
+      heroGrid.addEventListener('dragend', e => {
+        if (dragged) dragged.classList.remove('dragging');
+        heroGrid.querySelectorAll('.drag-over-card').forEach(el => el.classList.remove('drag-over-card'));
+        saveHeroOrder();
+      });
+      heroGrid.addEventListener('dragover', e => {
+        e.preventDefault();
+        const target = e.target.closest('.draggable-card');
+        if (target && target !== dragged) {
+          heroGrid.querySelectorAll('.drag-over-card').forEach(el => el.classList.remove('drag-over-card'));
+          target.classList.add('drag-over-card');
+        }
+      });
+      heroGrid.addEventListener('drop', e => {
+        e.preventDefault();
+        const target = e.target.closest('.draggable-card');
+        if (target && dragged && target !== dragged) {
+          const all = [...heroGrid.querySelectorAll('.draggable-card')];
+          const draggedIdx = all.indexOf(dragged);
+          const targetIdx = all.indexOf(target);
+          if (draggedIdx < targetIdx) {
+            heroGrid.insertBefore(dragged, target.nextSibling);
+          } else {
+            heroGrid.insertBefore(dragged, target);
+          }
+        }
+      });
+
+      function saveHeroOrder() {
+        const cards = [...heroGrid.querySelectorAll('.draggable-card')];
+        const order = cards.map((c, i) => ({ id: parseInt(c.dataset.id), order_index: i }));
+        fetch('/admin/reorder-hero-slides', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order })
+        })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            const s = document.getElementById('reorderStatusHero');
+            s.style.display = 'block';
+            setTimeout(() => { s.style.display = 'none'; }, 2000);
+          }
+        })
+        .catch(console.error);
+      }
+    }
+
+    // Drag and drop for UGC Items
+    const ugcGrid = document.getElementById('ugcDragGrid');
+    if (ugcGrid) {
+      let dragged = null;
+      ugcGrid.addEventListener('dragstart', e => {
+        dragged = e.target.closest('.draggable-card');
+        if (dragged) dragged.classList.add('dragging');
+      });
+      ugcGrid.addEventListener('dragend', e => {
+        if (dragged) dragged.classList.remove('dragging');
+        ugcGrid.querySelectorAll('.drag-over-card').forEach(el => el.classList.remove('drag-over-card'));
+        saveUgcOrder();
+      });
+      ugcGrid.addEventListener('dragover', e => {
+        e.preventDefault();
+        const target = e.target.closest('.draggable-card');
+        if (target && target !== dragged) {
+          ugcGrid.querySelectorAll('.drag-over-card').forEach(el => el.classList.remove('drag-over-card'));
+          target.classList.add('drag-over-card');
+        }
+      });
+      ugcGrid.addEventListener('drop', e => {
+        e.preventDefault();
+        const target = e.target.closest('.draggable-card');
+        if (target && dragged && target !== dragged) {
+          const all = [...ugcGrid.querySelectorAll('.draggable-card')];
+          const draggedIdx = all.indexOf(dragged);
+          const targetIdx = all.indexOf(target);
+          if (draggedIdx < targetIdx) {
+            ugcGrid.insertBefore(dragged, target.nextSibling);
+          } else {
+            ugcGrid.insertBefore(dragged, target);
+          }
+        }
+      });
+
+      function saveUgcOrder() {
+        const cards = [...ugcGrid.querySelectorAll('.draggable-card')];
+        const order = cards.map((c, i) => ({ id: parseInt(c.dataset.id), order_index: i }));
+        fetch('/admin/reorder-ugc-items', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order })
+        })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            const s = document.getElementById('reorderStatusUgc');
+            s.style.display = 'block';
+            setTimeout(() => { s.style.display = 'none'; }, 2000);
+          }
+        })
+        .catch(console.error);
+      }
+    }
   });
 </script>
+
+<style>
+.draggable-card {
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: grab;
+}
+.draggable-card:active {
+  cursor: grabbing;
+}
+.draggable-card.dragging {
+  opacity: 0.4;
+  transform: scale(0.97);
+}
+.draggable-card.drag-over-card {
+  outline: 2px dashed var(--gold);
+  outline-offset: 4px;
+}
+</style>
 
 <%- include('../partials/admin-mobile-nav') %>
 <script src="/js/main.js"></script>

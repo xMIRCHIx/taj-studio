@@ -205,7 +205,7 @@ exports.settingsPage = async (req, res, next) => {
 
 exports.reorderPhotos = async (req, res) => {
   try {
-    const { order } = req.body; // [{id, order_index}, ...]
+    const { order } = req.body;
     if (!Array.isArray(order)) return res.status(400).json({ error: 'Invalid payload' });
     for (const item of order) {
       await db.query('UPDATE photos SET order_index = ? WHERE id = ?', [item.order_index, item.id]);
@@ -227,6 +227,34 @@ exports.reorderVideos = async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     console.error('Reorder Videos Error:', err);
+    res.status(500).json({ error: 'Failed to reorder' });
+  }
+};
+
+exports.reorderHeroSlides = async (req, res) => {
+  try {
+    const { order } = req.body;
+    if (!Array.isArray(order)) return res.status(400).json({ error: 'Invalid payload' });
+    for (const item of order) {
+      await db.query('UPDATE hero_slides SET order_index = ? WHERE id = ?', [item.order_index, item.id]);
+    }
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Reorder Hero Slides Error:', err);
+    res.status(500).json({ error: 'Failed to reorder' });
+  }
+};
+
+exports.reorderUgcItems = async (req, res) => {
+  try {
+    const { order } = req.body;
+    if (!Array.isArray(order)) return res.status(400).json({ error: 'Invalid payload' });
+    for (const item of order) {
+      await db.query('UPDATE ugc_items SET order_index = ? WHERE id = ?', [item.order_index, item.id]);
+    }
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Reorder UGC Items Error:', err);
     res.status(500).json({ error: 'Failed to reorder' });
   }
 };
