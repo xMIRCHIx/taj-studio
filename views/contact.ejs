@@ -127,4 +127,38 @@
   </div>
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const services = urlParams.get('services');
+    const estimate = urlParams.get('estimate');
+
+    if (services && estimate) {
+      const messageField = document.getElementById('message');
+      if (messageField) {
+        messageField.value = `Hi Taj Studio! I would like to book a session with the following custom services:\n\n• ${services.split(', ').join('\n• ')}\n\nEstimated Total: ₹${parseInt(estimate).toLocaleString('en-IN')}\n\nPlease get back to me to discuss event details.`;
+      }
+      
+      // Auto-classify category if keyword matches
+      const categorySelect = document.getElementById('event_type');
+      if (categorySelect) {
+        const servicesLower = services.toLowerCase();
+        if (servicesLower.includes('wedding') && !servicesLower.includes('pre-wedding')) {
+          categorySelect.value = 'wedding';
+        } else if (servicesLower.includes('pre-wedding') || servicesLower.includes('prewedding')) {
+          categorySelect.value = 'prewedding';
+        } else if (servicesLower.includes('anniversary')) {
+          categorySelect.value = 'anniversary';
+        } else if (servicesLower.includes('engagement')) {
+          categorySelect.value = 'engagement';
+        } else if (servicesLower.includes('birthday')) {
+          categorySelect.value = 'birthday';
+        } else if (servicesLower.includes('indoor') || servicesLower.includes('studio')) {
+          categorySelect.value = 'indoor';
+        }
+      }
+    }
+  });
+</script>
+
 <%- include('partials/footer') %>

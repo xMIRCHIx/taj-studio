@@ -11,7 +11,7 @@
 </header>
 
 <!-- Pricing Section -->
-<section class="pricing-section">
+<section class="pricing-section" style="padding-bottom: 8rem;">
   <div class="container">
     
     <!-- Tab Controls -->
@@ -31,7 +31,7 @@
       <div class="pricing-grid reveal">
         
         <!-- Basic Album -->
-        <div class="pricing-card">
+        <div class="pricing-card" data-card-id="album-basic">
           <div class="pricing-card-header">
             <h3 class="pricing-card-title">Basic Album Design</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted);">Minimalist and clean storytelling layout.</p>
@@ -63,11 +63,12 @@
                 2 Rounds of Minor Revisions
               </li>
             </ul>
+            <button class="pricing-select-btn" data-name="Basic Album Design" data-price="80">Select Package</button>
           </div>
         </div>
 
         <!-- Premium Album -->
-        <div class="pricing-card featured">
+        <div class="pricing-card featured" data-card-id="album-premium">
           <div class="pricing-card-header">
             <h3 class="pricing-card-title">Premium Album Design</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted);">Bespoke creative design with thematic spreads.</p>
@@ -103,11 +104,12 @@
                 3 Rounds of Revisions
               </li>
             </ul>
+            <button class="pricing-select-btn" data-name="Premium Album Design" data-price="100">Select Package</button>
           </div>
         </div>
 
         <!-- Luxury Album -->
-        <div class="pricing-card">
+        <div class="pricing-card" data-card-id="album-luxury">
           <div class="pricing-card-header">
             <h3 class="pricing-card-title">Luxury Album Design</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted);">Ultimate storytelling with high-end finishing.</p>
@@ -143,6 +145,7 @@
                 VIP Priority Delivery
               </li>
             </ul>
+            <button class="pricing-select-btn" data-name="Luxury Album Design" data-price="140">Select Package</button>
           </div>
         </div>
 
@@ -153,7 +156,7 @@
       <div class="pricing-grid reveal">
         
         <!-- Basic Photo Editing -->
-        <div class="pricing-card">
+        <div class="pricing-card" data-card-id="photo-basic">
           <div class="pricing-card-header">
             <h3 class="pricing-card-title">Basic Photo Editing</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted);">Essential fixes for large batches of photos.</p>
@@ -181,11 +184,12 @@
                 High-Resolution Export
               </li>
             </ul>
+            <button class="pricing-select-btn" data-name="Basic Photo Editing" data-price="40">Select Package</button>
           </div>
         </div>
 
         <!-- Premium Pre-wedding Retouching -->
-        <div class="pricing-card featured">
+        <div class="pricing-card featured" data-card-id="photo-premium">
           <div class="pricing-card-header">
             <h3 class="pricing-card-title">Pre-Wedding Retouching</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted);">High-fidelity skin and landscape adjustments.</p>
@@ -217,11 +221,12 @@
                 Premium HDR-feel Finishing
               </li>
             </ul>
+            <button class="pricing-select-btn" data-name="Pre-Wedding Retouching" data-price="160">Select Package</button>
           </div>
         </div>
 
         <!-- Couple PNG Cutout -->
-        <div class="pricing-card">
+        <div class="pricing-card" data-card-id="photo-cutout">
           <div class="pricing-card-header">
             <h3 class="pricing-card-title">Couple PNG Cutout</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted);">Precise background isolation and cutouts.</p>
@@ -249,6 +254,7 @@
                 Album Design Ready Output
               </li>
             </ul>
+            <button class="pricing-select-btn" data-name="Couple PNG Cutout" data-price="200">Select Package</button>
           </div>
         </div>
 
@@ -266,7 +272,7 @@
       <div class="pricing-tier-grid reveal">
         
         <!-- Standard Video package -->
-        <div class="pricing-tier-card">
+        <div class="pricing-tier-card" data-card-id="video-standard">
           <span class="pricing-tier-badge standard">Standard</span>
           <div class="pricing-tier-price">₹1,998</div>
           <ul class="pricing-tier-features">
@@ -291,10 +297,11 @@
               1 Round of Revisions
             </li>
           </ul>
+          <button class="pricing-select-btn" data-name="Standard Wedding Video Editing" data-price="1998">Select Tier</button>
         </div>
 
         <!-- Premium Video Package -->
-        <div class="pricing-tier-card" style="border-color: var(--gold); box-shadow: var(--shadow-lg);">
+        <div class="pricing-tier-card" data-card-id="video-premium" style="border-color: var(--gold); box-shadow: var(--shadow-lg);">
           <span class="pricing-tier-badge premium">Premium</span>
           <div class="pricing-tier-price">₹4,000</div>
           <ul class="pricing-tier-features">
@@ -323,10 +330,11 @@
               2 Rounds of Revisions
             </li>
           </ul>
+          <button class="pricing-select-btn" data-name="Premium Wedding Video Editing" data-price="4000">Select Tier</button>
         </div>
 
         <!-- Luxury Video Package -->
-        <div class="pricing-tier-card">
+        <div class="pricing-tier-card" data-card-id="video-luxury">
           <span class="pricing-tier-badge luxury">Luxury</span>
           <div class="pricing-tier-price">₹6,000</div>
           <ul class="pricing-tier-features">
@@ -355,6 +363,7 @@
               Unlimited Revisions till satisfaction
             </li>
           </ul>
+          <button class="pricing-select-btn" data-name="Luxury Wedding Video Editing" data-price="6000">Select Tier</button>
         </div>
 
       </div>
@@ -364,20 +373,30 @@
       <div class="pricing-list-container reveal">
         <div class="pricing-list-grid">
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="reel-basic">
             <div class="pricing-list-info">
               <h4>Basic Wedding Reel</h4>
               <p>Up to 30 Seconds, Basic Transitions, Trending Music, HD Vertical Format</p>
             </div>
-            <div class="pricing-list-val">₹598</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹598</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Basic Wedding Reel" data-price="598">
+              </div>
+            </div>
           </div>
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="reel-premium">
             <div class="pricing-list-info">
               <h4>Premium Wedding Reel</h4>
               <p>Cinematic Visual Flow, Speed Ramping, Professional Color Grading, Sound FX</p>
             </div>
-            <div class="pricing-list-val">₹998</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹998</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Premium Wedding Reel" data-price="998">
+              </div>
+            </div>
           </div>
 
         </div>
@@ -388,44 +407,69 @@
       <div class="pricing-list-container reveal">
         <div class="pricing-list-grid">
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="full-traditional">
             <div class="pricing-list-info">
               <h4>Traditional Wedding Video (Basic)</h4>
               <p>Multi-camera alignment, clean switching, basic titles, linear event flow.</p>
             </div>
-            <div class="pricing-list-val">₹1,598 / hr</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹1,598 / hr</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Traditional Wedding Video (per hour)" data-price="1598">
+              </div>
+            </div>
           </div>
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="full-traditional-premium">
             <div class="pricing-list-info">
               <h4>Premium Traditional Edit</h4>
               <p>Color enhancement, advanced audio mixing, smooth transition fades, premium layout.</p>
             </div>
-            <div class="pricing-list-val">₹2,398 / hr</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹2,398 / hr</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Premium Traditional Edit (per hour)" data-price="2398">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="full-cinematic-std">
             <div class="pricing-list-info">
               <h4>Cinematic Wedding Film (Standard Tier)</h4>
               <p>Cinematic wedding film compile with creative storytelling pacing.</p>
             </div>
-            <div class="pricing-list-val">₹5,998</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹5,998</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Cinematic Wedding Film (Standard)" data-price="5998">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="full-cinematic-prem">
             <div class="pricing-list-info">
               <h4>Cinematic Wedding Film (Premium Tier)</h4>
               <p>High-end narrative film, multi-cam sound design, custom grading curves.</p>
             </div>
-            <div class="pricing-list-val">₹8,000</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹8,000</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Cinematic Wedding Film (Premium)" data-price="8000">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="full-cinematic-lux">
             <div class="pricing-list-info">
               <h4>Cinematic Wedding Film (Luxury Tier)</h4>
               <p>Bespoke master cut film, advanced dynamic transitions, VIP editor queue.</p>
             </div>
-            <div class="pricing-list-val">₹12,000</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹12,000</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Cinematic Wedding Film (Luxury)" data-price="12000">
+              </div>
+            </div>
           </div>
 
         </div>
@@ -436,52 +480,82 @@
       <div class="pricing-list-container reveal">
         <div class="pricing-list-grid">
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="creator-basic">
             <div class="pricing-list-info">
               <h4>Basic Short Video</h4>
               <p>Professional cuts, basic text captions, background music overlay.</p>
             </div>
-            <div class="pricing-list-val">₹598</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹598</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Creator Basic Short Video" data-price="598">
+              </div>
+            </div>
           </div>
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="creator-premium">
             <div class="pricing-list-info">
               <h4>Premium Creator Reel / Short</h4>
               <p>Viral editing style, high-end sound design, animated subtitles, zooming effects.</p>
             </div>
-            <div class="pricing-list-val">₹998</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹998</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Premium Creator Short/Reel" data-price="998">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="creator-talking">
             <div class="pricing-list-info">
               <h4>Talking Head Video</h4>
               <p>Clean multi-takes cutting, professional color curves, smooth captions, visual zoom markers.</p>
             </div>
-            <div class="pricing-list-val">₹1,398</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹1,398</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Talking Head Video" data-price="1398">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="yt-basic">
             <div class="pricing-list-info">
               <h4>YouTube Basic Editing</h4>
               <p>Simple layout edit, introductory logo screen, outro slides, background music.</p>
             </div>
-            <div class="pricing-list-val">₹1,398</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹1,398</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="YouTube Basic Editing" data-price="1398">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="yt-standard">
             <div class="pricing-list-info">
               <h4>YouTube Standard Editing</h4>
               <p>B-roll sync, basic motion graphics, sound compression, noise clean.</p>
             </div>
-            <div class="pricing-list-val">₹1,998</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹1,998</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="YouTube Standard Editing" data-price="1998">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="yt-premium">
             <div class="pricing-list-info">
               <h4>YouTube Premium Editing</h4>
               <p>Cinematic story-driven edit, advanced grading, custom sound effects, optimized format.</p>
             </div>
-            <div class="pricing-list-val">₹3,998</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹3,998</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="YouTube Premium Editing" data-price="3998">
+              </div>
+            </div>
           </div>
 
         </div>
@@ -497,36 +571,56 @@
       <div class="pricing-list-container reveal">
         <div class="pricing-list-grid">
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="design-social">
             <div class="pricing-list-info">
               <h4>Social Media Post Design</h4>
               <p>Single platform customized static visual post layout</p>
             </div>
-            <div class="pricing-list-val">Starting ₹198</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">Starting ₹198</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Social Media Post Design" data-price="198">
+              </div>
+            </div>
           </div>
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="design-social-premium">
             <div class="pricing-list-info">
               <h4>Premium Social Media Design</h4>
               <p>Multi-slide carousels or custom brand aesthetics layout</p>
             </div>
-            <div class="pricing-list-val">Starting ₹398</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">Starting ₹398</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Premium Social Media Design" data-price="398">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="design-promo">
             <div class="pricing-list-info">
               <h4>Creative Promotional Design</h4>
               <p>Banners, discounts flyers, and social campaigns ads creatives</p>
             </div>
-            <div class="pricing-list-val">Starting ₹598</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">Starting ₹598</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Creative Promotional Design" data-price="598">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="design-invite">
             <div class="pricing-list-info">
               <h4>Wedding Invitation Card Design</h4>
               <p>Artistic e-invites, traditional motifs, customized typography layout</p>
             </div>
-            <div class="pricing-list-val">Starting ₹598</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">Starting ₹598</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Wedding Invitation Design" data-price="598">
+              </div>
+            </div>
           </div>
 
           <div class="pricing-list-item">
@@ -553,52 +647,82 @@
       <div class="pricing-list-container reveal">
         <div class="pricing-list-grid">
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="addon-subtitle-ai">
             <div class="pricing-list-info">
               <h4>AI Subtitle Generation</h4>
               <p>Multi-language translation subtitles generated via advanced tools</p>
             </div>
-            <div class="pricing-list-val">₹398</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹398</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="AI Subtitle Generation Addon" data-price="398">
+              </div>
+            </div>
           </div>
           
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="addon-subtitle-manual">
             <div class="pricing-list-info">
               <h4>Manual Subtitle Scripting</h4>
               <p>100% accurate time-synced spelling and transcription by editor</p>
             </div>
-            <div class="pricing-list-val">₹598</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹598</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Manual Subtitle Scripting Addon" data-price="598">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="addon-color">
             <div class="pricing-list-info">
               <h4>Professional Color Grading</h4>
               <p>Custom LUT overlay, color matching curves across multi-takes</p>
             </div>
-            <div class="pricing-list-val">₹598</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹598</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Professional Color Grading Addon" data-price="598">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="addon-sound">
             <div class="pricing-list-info">
               <h4>Creative Sound Design</h4>
               <p>Atmospheric noises, musical timing overlays, sound enhancements</p>
             </div>
-            <div class="pricing-list-val">₹798</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹798</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Creative Sound Design Addon" data-price="798">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="addon-logo">
             <div class="pricing-list-info">
               <h4>Logo Animation</h4>
               <p>Custom intros and dynamic reveal animations for your brand mark</p>
             </div>
-            <div class="pricing-list-val">₹998</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹998</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Logo Animation Addon" data-price="998">
+              </div>
+            </div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="addon-thumbnail">
             <div class="pricing-list-info">
               <h4>Video Thumbnail Design</h4>
               <p>Highly click-worthy YouTube and reels cover banner files</p>
             </div>
-            <div class="pricing-list-val">₹598</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹598</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Video Thumbnail Design Addon" data-price="598">
+              </div>
+            </div>
           </div>
 
           <div class="pricing-list-item">
@@ -609,12 +733,17 @@
             <div class="pricing-list-val">Extra Charges</div>
           </div>
 
-          <div class="pricing-list-item">
+          <div class="pricing-list-item" data-list-id="addon-revision">
             <div class="pricing-list-info">
               <h4>Additional Project Revision</h4>
               <p>Per extra revision beyond the package bounds</p>
             </div>
-            <div class="pricing-list-val">₹398</div>
+            <div style="display: flex; align-items: center;">
+              <div class="pricing-list-val">₹398</div>
+              <div class="pricing-checkbox-wrapper">
+                <input type="checkbox" class="pricing-list-checkbox" data-name="Additional Revision Addon" data-price="398">
+              </div>
+            </div>
           </div>
 
         </div>
@@ -655,22 +784,28 @@
   </div>
 </section>
 
-<!-- Tab Switching Script -->
+<!-- Floating Estimate Summary Bar -->
+<div class="floating-estimate-bar" id="estimateBar">
+  <div class="estimate-summary">
+    <span class="estimate-count" id="estimateCount">Selected: 0 Services</span>
+    <span class="estimate-total-price" id="estimateTotal">Est: ₹0</span>
+  </div>
+  <a href="#" class="estimate-book-btn" id="estimateBookBtn">Proceed to Book</a>
+</div>
+
+<!-- Tab & Selection Script -->
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // 1. Tab Switching Logic
     const tabBtns = document.querySelectorAll('.pricing-tab-btn');
     const panels = document.querySelectorAll('.pricing-tab-panel');
 
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Deactivate all buttons & panels
         tabBtns.forEach(b => b.classList.remove('active'));
         panels.forEach(p => p.classList.remove('active'));
 
-        // Activate clicked button
         btn.classList.add('active');
-
-        // Activate corresponding panel
         const targetTab = btn.getAttribute('data-tab');
         const targetPanel = document.getElementById(`panel-${targetTab}`);
         if (targetPanel) {
@@ -679,7 +814,80 @@
       });
     });
 
-    // Reveal animations on scroll
+    // 2. Estimate Builder Logic
+    const selectBtns = document.querySelectorAll('.pricing-select-btn');
+    const listCheckboxes = document.querySelectorAll('.pricing-list-checkbox');
+    const estimateBar = document.getElementById('estimateBar');
+    const estimateCountEl = document.getElementById('estimateCount');
+    const estimateTotalEl = document.getElementById('estimateTotal');
+    const estimateBookBtn = document.getElementById('estimateBookBtn');
+
+    // Selected state tracker
+    let selectedServices = {};
+
+    // Toggle card selection
+    selectBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.pricing-card') || btn.closest('.pricing-tier-card');
+        const name = btn.getAttribute('data-name');
+        const price = parseInt(btn.getAttribute('data-price'));
+
+        if (card.classList.contains('selected')) {
+          // Deselect
+          card.classList.remove('selected');
+          btn.textContent = 'Select Package';
+          delete selectedServices[name];
+        } else {
+          // Select (if it's in a single category grid like basic/premium/luxury album, let's allow multi or toggle. Let's toggle only for that category to avoid picking basic+premium together, OR keep it pure additive. Additive is better as users can check details. Let's keep it additive but update visual cues).
+          card.classList.add('selected');
+          btn.textContent = 'Selected ✓';
+          selectedServices[name] = price;
+        }
+        updateEstimate();
+      });
+    });
+
+    // Toggle list checkbox selection
+    listCheckboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const listItem = cb.closest('.pricing-list-item');
+        const name = cb.getAttribute('data-name');
+        const price = parseInt(cb.getAttribute('data-price'));
+
+        if (cb.checked) {
+          listItem.classList.add('selected');
+          selectedServices[name] = price;
+        } else {
+          listItem.classList.remove('selected');
+          delete selectedServices[name];
+        }
+        updateEstimate();
+      });
+    });
+
+    // Calculate totals & update estimate drawer
+    function updateEstimate() {
+      const names = Object.keys(selectedServices);
+      const total = Object.values(selectedServices).reduce((sum, val) => sum + val, 0);
+      const count = names.length;
+
+      if (count > 0) {
+        estimateCountEl.textContent = `Selected: ${count} Service${count > 1 ? 's' : ''}`;
+        estimateTotalEl.textContent = `Est: ₹${total.toLocaleString('en-IN')}`;
+        
+        // Build booking query URL
+        const serviceQuery = encodeURIComponent(names.join(', '));
+        estimateBookBtn.href = `/contact?services=${serviceQuery}&estimate=${total}`;
+        
+        // Show bar
+        estimateBar.classList.add('visible');
+      } else {
+        // Hide bar
+        estimateBar.classList.remove('visible');
+      }
+    }
+
+    // 3. Reveal animations on scroll
     const reveals = document.querySelectorAll('.reveal');
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
@@ -692,7 +900,7 @@
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Trigger initially
+    handleScroll();
   });
 </script>
 

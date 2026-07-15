@@ -3746,3 +3746,181 @@ textarea.form-control {
     grid-template-columns: 1fr;
   }
 }
+
+/* 25. PRICING SELECTOR & ESTIMATOR STYLES */
+.pricing-select-btn {
+  display: block;
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  margin-top: 1.5rem;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.pricing-select-btn:hover {
+  background: var(--gold);
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(201, 169, 110, 0.3);
+}
+
+.pricing-card.selected {
+  border-color: var(--gold-deep) !important;
+  box-shadow: 0 15px 40px rgba(184, 147, 74, 0.15) !important;
+  transform: translateY(-5px);
+}
+
+.pricing-card.selected .pricing-select-btn {
+  background: var(--dark) !important;
+  border-color: var(--dark) !important;
+  color: var(--white) !important;
+}
+
+.pricing-tier-card.selected {
+  border-color: var(--gold-deep) !important;
+  box-shadow: 0 15px 40px rgba(184, 147, 74, 0.15) !important;
+  transform: translateY(-5px);
+}
+
+.pricing-tier-card.selected .pricing-select-btn {
+  background: var(--dark) !important;
+  border-color: var(--dark) !important;
+  color: var(--white) !important;
+}
+
+/* Custom checkbox wrapper for list items */
+.pricing-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  margin-left: 1.5rem;
+}
+
+.pricing-list-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+.pricing-list-checkbox:checked {
+  background-color: var(--gold);
+  border-color: var(--gold);
+}
+
+.pricing-list-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.pricing-list-item.selected {
+  background-color: rgba(201, 169, 110, 0.05);
+  border-bottom-color: var(--gold) !important;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 4px;
+}
+
+/* Floating Estimate Bar */
+.floating-estimate-bar {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  background: rgba(250, 248, 245, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  box-shadow: 0 15px 40px rgba(28, 26, 24, 0.12);
+  z-index: 2000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-estimate-bar.visible {
+  bottom: 25px;
+}
+
+.estimate-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.estimate-count {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.estimate-total-price {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.estimate-book-btn {
+  background-color: var(--gold-deep);
+  color: var(--white);
+  padding: 0.8rem 2.2rem;
+  border-radius: 50px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 15px rgba(184, 147, 74, 0.3);
+  transition: var(--transition);
+}
+
+.estimate-book-btn:hover {
+  background-color: var(--dark);
+  box-shadow: 0 4px 15px rgba(28, 26, 24, 0.3);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .floating-estimate-bar {
+    border-radius: 20px;
+    padding: 1rem 1.5rem;
+    width: 95%;
+  }
+  .estimate-total-price {
+    font-size: 1.4rem;
+  }
+  .estimate-book-btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.8rem;
+  }
+}
