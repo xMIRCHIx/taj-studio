@@ -134,3 +134,7 @@ exports.contactSubmit = async (req, res, next) => {
     res.redirect('/contact');
   }
 };
+
+exports.pricingPage = (req, res) => {
+  res.render('pricing', { title: 'Pricing & Packages — Taj Studio' });
+};

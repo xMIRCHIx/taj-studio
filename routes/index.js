@@ -7,6 +7,7 @@ router.get('/videos', ctrl.videosLanding);
 router.get('/photos', ctrl.photosLanding);
 router.get('/videos/:category', ctrl.videoCategory);
 router.get('/photos/:category', ctrl.photoCategory);
+router.get('/pricing', ctrl.pricingPage);
 router.get('/contact', ctrl.contactPage);
 router.post('/contact', ctrl.contactSubmit);
 
