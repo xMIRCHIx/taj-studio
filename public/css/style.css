@@ -3506,6 +3506,8 @@ textarea.form-control {
 }
 
 .pricing-card-body {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 
@@ -3752,7 +3754,7 @@ textarea.form-control {
   display: block;
   width: 100%;
   padding: 0.9rem 1.5rem;
-  margin-top: 1.5rem;
+  margin-top: auto;
   background: transparent;
   border: 1px solid var(--gold);
   color: var(--text);
